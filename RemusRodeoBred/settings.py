@@ -109,4 +109,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'stevenremus@gmail.com'
 EMAIL_HOST_PASSWORD = 'nxet defk sfzr aprm'
 DEFAULT_FROM_EMAIL = 'Remus RodeoBred <stevenremus@gmail.com>'
-CONTACT_EMAIL = "stevenremus@gmail.com
+CONTACT_EMAIL = "stevenremus@gmail.com"
