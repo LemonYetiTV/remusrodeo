@@ -1,0 +1,176 @@
+{% extends "horses/base.html" %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="detail-grid">
+
+    <div class="detail-main">
+
+        {% if horse.featured_photo %}
+        <img id="mainHorseImage"
+             class="detail-photo"
+             src="{{ horse.featured_photo.url }}"
+             alt="{{ horse.barn_name }}">
+        {% endif %}
+
+        {% if gallery_photos %}
+        <div class="gallery-grid">
+            {% for photo in gallery_photos %}
+            <button class="gallery-item {% if forloop.first %}active{% endif %}"
+                    data-photo="{{ photo.image.url }}">
+                <img class="gallery-thumb" src="{{ photo.image.url }}" alt="">
+                {% if photo.caption %}
+                <div class="gallery-caption">{{ photo.caption }}</div>
+                {% endif %}
+            </button>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if horse.youtube_url %}
+        <div class="content-block">
+            <h3>Video</h3>
+
+            <div style="position:relative;padding-bottom:56.25%;height:0;border-radius:10px;overflow:hidden;margin:20px 0;">
+                <iframe src="https://www.youtube.com/embed/{{ horse.youtube_url|cut:'https://youtu.be/'|cut:'https://www.youtube.com/watch?v=' }}"
+                        frameborder="0"
+                        allowfullscreen
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                </iframe>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if updates %}
+        <div class="content-block">
+            <h3>Training Updates</h3>
+
+            {% for update in updates %}
+            <p>
+                <strong>{{ update.date }}</strong><br>
+                {{ update.text }}
+            </p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+    </div>
+
+
+    <aside class="detail-sidebar">
+
+        <h1>{{ horse.program_id }} - {{ horse.barn_name }}</h1>
+
+        <div class="price-box">
+            <div class="price-label">Price</div>
+
+            {% if horse.price %}
+            <div class="price-value">
+                ${{ horse.price|floatformat:0|intcomma }}
+            </div>
+            {% else %}
+            <div class="price-value">Inquire</div>
+            {% endif %}
+        </div>
+
+
+        <div class="stat-list">
+
+            <div class="stat-row">
+                <div class="stat-label">Registered Name</div>
+                <div>{{ horse.registered_name|default:"N/A" }}</div>
+            </div>
+
+            <div class="stat-row">
+                <div class="stat-label">Age</div>
+                <div>{{ horse.age }}</div>
+            </div>
+
+            <div class="stat-row">
+                <div class="stat-label">Height</div>
+                <div>{{ horse.height_hands }} hands</div>
+            </div>
+
+            <div class="stat-row">
+                <div class="stat-label">Sex</div>
+                <div>{{ horse.get_sex_display }}</div>
+            </div>
+
+            <div class="stat-row">
+                <div class="stat-label">Color</div>
+                <div>{{ horse.color }}</div>
+            </div>
+
+            <div class="stat-row">
+                <div class="stat-label">Discipline Focus</div>
+                <div>{{ horse.get_discipline_focus_display }}</div>
+            </div>
+
+        </div>
+
+        <p>{{ horse.description }}</p>
+
+
+        <div class="form-block">
+
+            <h3>Request Information</h3>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="form-row">
+                    <label>Name</label>
+                    {{ form.name }}
+                </div>
+
+                <div class="form-row">
+                    <label>Email</label>
+                    {{ form.email }}
+                </div>
+
+                <div class="form-row">
+                    <label>Phone</label>
+                    {{ form.phone }}
+                </div>
+
+                <div class="form-row">
+                    <label>Message</label>
+                    {{ form.message }}
+                </div>
+
+                <button type="submit">Send Inquiry</button>
+
+            </form>
+
+        </div>
+
+    </aside>
+
+</div>
+
+
+<script>
+
+    const mainImage = document.getElementById("mainHorseImage")
+    const thumbs = document.querySelectorAll(".gallery-item")
+
+    thumbs.forEach(btn => {
+
+        btn.addEventListener("click", () => {
+
+            thumbs.forEach(t => t.classList.remove("active"))
+
+            btn.classList.add("active")
+
+            const photo = btn.getAttribute("data-photo")
+
+            mainImage.src = photo
+
+        })
+
+    })
+
+</script>
+
+{% endblock %}

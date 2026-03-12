@@ -1,0 +1,52 @@
+.hero-brand {
+    background: #f4efe7;
+    text-align: center;
+    padding: 120px 40px;
+}
+
+.hero-logo {
+    max-width: 320px;
+    margin-bottom: 25px;
+}
+
+.hero-title {
+    font-size: 42px;
+    margin-bottom: 15px;
+    color: #1a1a1a;
+}
+
+.hero-text {
+    font-size: 20px;
+    max-width: 700px;
+    margin: auto;
+    margin-bottom: 30px;
+    color: #4a4a4a;
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.button-link {
+    background: #5b3a1d;
+    color: white;
+    padding: 12px 26px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+    .button-link:hover {
+        background: #734826;
+    }
+
+.button-secondary {
+    border: 2px solid #5b3a1d;
+    padding: 12px 26px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #5b3a1d;
+    font-weight: 600;
+}

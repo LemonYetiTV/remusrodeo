@@ -1,0 +1,30 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+
+<p>
+    <a href="{% url 'admin:horses_horse_change' original.pk %}">Back to horse</a>
+</p>
+
+<div style="max-width: 900px;">
+    <textarea id="postText"
+              style="width: 100%; min-height: 320px; font-family: monospace; font-size: 14px; padding: 12px;">{{ post_text }}</textarea>
+
+    <div style="margin-top: 14px;">
+        <button type="button"
+                onclick="copyPostText()"
+                style="padding: 10px 16px; cursor: pointer;">
+            Copy to Clipboard
+        </button>
+    </div>
+</div>
+
+<script>function copyPostText() {
+            const textarea = document.getElementById("postText");
+            textarea.select();
+            textarea.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(textarea.value);
+            alert("Facebook post copied.");
+        }</script>
+{% endblock %}

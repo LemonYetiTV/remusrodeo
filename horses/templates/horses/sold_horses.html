@@ -1,0 +1,57 @@
+{% extends "horses/base.html" %}
+
+{% block content %}
+<h1 class="section-title">Sold Horses</h1>
+<p class="section-subtitle">
+    Horses that have moved on through the Remus RodeoBred program.
+</p>
+
+<div class="listing-grid">
+    {% for horse in horses %}
+    <article class="listing-card">
+        <div class="listing-media">
+            {% if horse.featured_photo %}
+            <img src="{{ horse.featured_photo.url }}" alt="{{ horse.barn_name }}">
+            {% endif %}
+
+            <div class="listing-badge">Sold</div>
+        </div>
+
+        <div class="listing-body">
+            <div class="listing-program">{{ horse.program_id }}</div>
+            <h2 class="listing-title">{{ horse.barn_name }}</h2>
+
+            <div class="listing-stats">
+                <div class="listing-stat">
+                    <span class="listing-stat-label">Age</span>
+                    <span class="listing-stat-value">{{ horse.age }}</span>
+                </div>
+                <div class="listing-stat">
+                    <span class="listing-stat-label">Height</span>
+                    <span class="listing-stat-value">{{ horse.height_hands }} hands</span>
+                </div>
+                <div class="listing-stat">
+                    <span class="listing-stat-label">Sex</span>
+                    <span class="listing-stat-value">{{ horse.get_sex_display }}</span>
+                </div>
+                <div class="listing-stat">
+                    <span class="listing-stat-label">Focus</span>
+                    <span class="listing-stat-value">{{ horse.get_discipline_focus_display }}</span>
+                </div>
+            </div>
+
+            <p class="listing-text">{{ horse.description|truncatewords:22 }}</p>
+
+            <div class="listing-actions">
+                <div class="listing-focus">{{ horse.get_training_stage_display }}</div>
+                <a class="button-link" href="{% url 'horses:horse_detail' horse.slug %}">View Horse</a>
+            </div>
+        </div>
+    </article>
+    {% empty %}
+    <div class="content-block">
+        <p>No sold horses yet.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

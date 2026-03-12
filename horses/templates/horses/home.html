@@ -1,0 +1,108 @@
+{% extends "horses/base.html" %}
+{% load humanize %}
+{% load static %}
+
+{% block content %}
+<section class="hero hero-brand">
+    <div class="hero-copy">
+        <div class="hero-kicker">OTTB Performance Prospects</div>
+
+        <h1 class="hero-title">
+            REMUS&nbsp;RODEOBRED<br>
+            THOROUGHBREDS
+        </h1>
+
+        <p class="hero-text">
+            A Quarter Horse may make you a winner, but a Thoroughbred will make you a champion.
+        </p>
+
+        <div class="hero-actions">
+            <a class="button-link" href="{% url 'horses:horse_list' %}">View Available Horses</a>
+            <a class="button-secondary" href="{% url 'horses:sold_horses' %}">Sold Horses</a>
+        </div>
+    </div>
+
+    <div class="hero-logo-panel">
+        <div class="hero-logo-wrap">
+            <img src="{% static 'images/rr_thoroughbreds_logo.png' %}"
+                 class="hero-logo"
+                 alt="Remus RodeoBred Thoroughbreds">
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">Featured Horses</h2>
+    <p class="section-subtitle">
+        Selected OTTBs retrained for barrels, poles, and all-around rodeo potential.
+    </p>
+
+    <div class="featured-grid">
+        {% for horse in featured_horses %}
+        <article class="listing-card">
+            <div class="listing-media">
+                {% if horse.is_new %}
+                <div class="new-ribbon">Newly Listed</div>
+                {% endif %}
+
+                {% if horse.featured_photo %}
+                <img src="{{ horse.featured_photo.url }}" alt="{{ horse.barn_name }}">
+                {% endif %}
+
+                <div class="discipline-tag">{{ horse.get_discipline_focus_display }}</div>
+
+                {% if horse.price %}
+                <div class="listing-price">${{ horse.price|floatformat:0|intcomma }}</div>
+                {% else %}
+                <div class="listing-price">Inquire</div>
+                {% endif %}
+            </div>
+
+            <div class="listing-body">
+                <div class="listing-program">{{ horse.program_id }}</div>
+                <h2 class="listing-title">{{ horse.barn_name }}</h2>
+
+                <div class="listing-stats">
+                    <div class="listing-stat">
+                        <span class="listing-stat-label">Age</span>
+                        <span class="listing-stat-value">{{ horse.age }}</span>
+                    </div>
+                    <div class="listing-stat">
+                        <span class="listing-stat-label">Height</span>
+                        <span class="listing-stat-value">{{ horse.height_hands }} hands</span>
+                    </div>
+                    <div class="listing-stat">
+                        <span class="listing-stat-label">Sex</span>
+                        <span class="listing-stat-value">{{ horse.get_sex_display }}</span>
+                    </div>
+                    <div class="listing-stat">
+                        <span class="listing-stat-label">Color</span>
+                        <span class="listing-stat-value">{{ horse.color|default:"N/A" }}</span>
+                    </div>
+                </div>
+
+                <p class="listing-text">{{ horse.description|truncatewords:26 }}</p>
+
+                <div class="listing-actions">
+                    <div class="listing-focus">{{ horse.get_discipline_focus_display }}</div>
+                    <a class="button-link" href="{% url 'horses:horse_detail' horse.slug %}">View Horse</a>
+                </div>
+            </div>
+        </article>
+        {% empty %}
+        <div class="content-block">
+            <p>No featured horses yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="content-block">
+    <h2>About the Program</h2>
+    <p>
+        We focus on athletic, trainable OTTBs with the mind and movement to transition into
+        barrels, poles, and all-around rodeo careers. The goal is simple: develop horses with
+        real ability, honest training, and a program identity buyers can trust.
+    </p>
+</section>
+{% endblock %}

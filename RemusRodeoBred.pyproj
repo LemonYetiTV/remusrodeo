@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <Name>RemusRodeoBred</Name>
+    <RootNamespace>RemusRodeoBred</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>d7d111b8-0afe-4446-bfc3-c71a0edaea6a</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <ProjectTypeGuids>{5F0BE9CA-D677-4A4D-8806-6076C0FAAD37};{349c5851-65df-11da-9384-00065b846f21};{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <StartupFile>manage.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <WebBrowserUrl>http://localhost</WebBrowserUrl>
+    <LaunchProvider>Django launcher</LaunchProvider>
+    <DjangoSettingsModule>RemusRodeoBred.settings</DjangoSettingsModule>
+    <OutputPath>.</OutputPath>
+    <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="horses\forms.py" />
+    <Compile Include="horses\admin.py" />
+    <Compile Include="horses\apps.py" />
+    <Compile Include="horses\migrations\__init__.py" />
+    <Compile Include="horses\models.py" />
+    <Compile Include="horses\tests.py" />
+    <Compile Include="horses\urls.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="horses\utils.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="horses\views.py" />
+    <Compile Include="horses\__init__.py" />
+    <Compile Include="manage.py" />
+    <Compile Include="RemusRodeoBred\__init__.py" />
+    <Compile Include="RemusRodeoBred\settings.py" />
+    <Compile Include="RemusRodeoBred\urls.py" />
+    <Compile Include="RemusRodeoBred\wsgi.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="horses\static\" />
+    <Folder Include="horses\static\images\" />
+    <Folder Include="horses\static\css\" />
+    <Folder Include="horses\templates\admin\horses\" />
+    <Folder Include="horses\templates\admin\horses\horse\" />
+    <Folder Include="horses\templates\horses\" />
+    <Folder Include="horses\" />
+    <Folder Include="horses\migrations\" />
+    <Folder Include="horses\templates\" />
+    <Folder Include="horses\templates\admin\" />
+    <Folder Include="media\" />
+    <Folder Include="media\flyers\" />
+    <Folder Include="media\horses\" />
+    <Folder Include="media\horses\featured\" />
+    <Folder Include="media\horses\gallery\" />
+    <Folder Include="RemusRodeoBred\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="horses\static\css\site.css" />
+    <Content Include="horses\static\images\horse_silhouette.png" />
+    <Content Include="horses\static\images\rr_thoroughbreds_logo.png" />
+    <Content Include="horses\templates\admin\horses\horse\change_form.html" />
+    <Content Include="horses\templates\admin\horses\horse\facebook_post.html" />
+    <Content Include="horses\templates\horses\base.html" />
+    <Content Include="horses\templates\horses\home.html" />
+    <Content Include="horses\templates\horses\horse_detail.html" />
+    <Content Include="horses\templates\horses\horse_list.html" />
+    <Content Include="horses\templates\horses\inquiry_success.html" />
+    <Content Include="horses\templates\horses\sold_horses.html" />
+    <Content Include="media\flyers\rrb-001_rrb-001-ruger_facebook.jpg" />
+    <Content Include="media\horses\featured\ruger.jpg" />
+    <Content Include="media\horses\featured\ruger_D8yzpvw.jpg" />
+    <Content Include="media\horses\gallery\643862760_904329505822527_938780046114431630_n.jpg" />
+    <Content Include="media\horses\gallery\644283348_904329482489196_5699588913307373507_n.jpg" />
+    <Content Include="media\horses\gallery\ruger.jpg" />
+    <Content Include="requirements.txt" />
+    <Content Include="db.sqlite3" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.html">
+      <SubType>WebBrowser</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Django.targets" />
+  <!-- Specify pre- and post-build commands in the BeforeBuild and 
+       AfterBuild targets below. -->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <AutoAssignPort>True</AutoAssignPort>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

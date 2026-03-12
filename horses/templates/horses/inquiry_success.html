@@ -1,0 +1,17 @@
+{% extends "horses/base.html" %}
+
+{% block content %}
+<div class="horse-card">
+    <h2>Inquiry Sent</h2>
+
+    {% if horse_program_id %}
+    <p>Thanks. Your inquiry for <strong>{{ horse_program_id }}</strong> has been submitted.</p>
+    {% else %}
+    <p>Thanks. Your inquiry has been submitted.</p>
+    {% endif %}
+
+    <p>We will review it and get back to you soon.</p>
+
+    <a class="button-link" href="{% url 'horses:horse_list' %}">Back to Available Horses</a>
+</div>
+{% endblock %}
