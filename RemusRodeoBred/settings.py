@@ -4,6 +4,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "change-me-later-for-production"
 DEBUG = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://remusrodeo-production.up.railway.app",
+    "https://remusrodeo.com",
+    "https://www.remusrodeo.com",
+]
+
 ALLOWED_HOSTS = [
     "remusrodeo-production.up.railway.app",
     "remusrodeo.com",
