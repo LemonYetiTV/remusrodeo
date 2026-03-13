@@ -4,6 +4,8 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <Name>RemusRodeoBred</Name>
     <RootNamespace>RemusRodeoBred</RootNamespace>
+    <SuppressEnvironmentCreationPrompt>True</SuppressEnvironmentCreationPrompt>
+    <SuppressConfigureTestFrameworkPrompt>true</SuppressConfigureTestFrameworkPrompt>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -69,6 +71,7 @@
     <Folder Include="RemusRodeoBred\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
     <Content Include="horses\static\css\site.css" />
     <Content Include="horses\static\images\horse_silhouette.png" />
     <Content Include="horses\static\images\rr_thoroughbreds_logo.png" />
@@ -86,6 +89,7 @@
     <Content Include="media\horses\gallery\643862760_904329505822527_938780046114431630_n.jpg" />
     <Content Include="media\horses\gallery\644283348_904329482489196_5699588913307373507_n.jpg" />
     <Content Include="media\horses\gallery\ruger.jpg" />
+    <Content Include="Procfile" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
   </ItemGroup>

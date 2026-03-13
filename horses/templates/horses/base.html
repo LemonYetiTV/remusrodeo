@@ -690,10 +690,10 @@
             <img src="{% static 'images/rr_thoroughbreds_logo.png' %}" class="site-logo" alt="RR Thoroughbreds logo">
 
             <nav>
-                <a href="{% url 'horses:home' %}">Home</a>
-                <a href="{% url 'horses:horse_list' %}">Available Horses</a>
-                <a href="{% url 'horses:sold_horses' %}">Sold Horses</a>
-                <a href="/admin/">Admin</a>
+                <a href="/">Home</a>
+                <a href="/horses/">Available Horses</a>
+                <a href="/sold/">Sold Horses</a>
+                <a href="https://remusrodeo-shop.fourthwall.com target="_blank">Shop</a>
             </nav>
         </div>
     </header>
@@ -702,8 +702,14 @@
         {% block content %}{% endblock %}
     </div>
 
-    <footer>
+    <footer style="text-align:center; margin-top:40px; font-size:12px; opacity:0.6;">
+
         Remus RodeoBred Thoroughbreds • Arizona
+
+        {% if user.is_staff %}
+        <a href="/admin/">Admin</a>
+        {% endif %}
+
     </footer>
 
     <script>
