@@ -100,6 +100,12 @@ class HorseAdmin(admin.ModelAdmin):
         HorsePhotoInline,
         TrainingUpdateInline,
     ]
+    @admin.register(HorseEvaluation)
+
+    class HorseEvaluationAdmin(admin.ModelAdmin):
+        list_display = ("horse", "arrival_date", "created_at", "updated_at")
+        search_fields = ("horse__program_id", "horse__barn_name", "previous_owner", "purchase_source")
+        ordering = ("-updated_at",)
 
     def get_readonly_fields(self, request, obj=None):
         base_fields = ("created_at", "updated_at", "is_new", "flyer_preview")
