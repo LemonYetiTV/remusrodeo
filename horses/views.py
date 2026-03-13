@@ -1,5 +1,3 @@
-from django.conf import settings
-from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
@@ -48,35 +46,6 @@ def horse_detail(request, slug):
             inquiry = form.save(commit=False)
             inquiry.horse = horse
             inquiry.save()
-
-            listing_url = request.build_absolute_uri(horse.get_absolute_url())
-            photo_url = ""
-            if horse.featured_photo:
-                photo_url = request.build_absolute_uri(horse.featured_photo.url)
-
-            subject = f"New Horse Inquiry: {horse.program_id} - {horse.barn_name}"
-
-            message = f"""New inquiry received.
-
-Horse: {horse.program_id} - {horse.barn_name}
-Listing: {listing_url}
-Photo: {photo_url if photo_url else "No featured photo"}
-
-Name: {inquiry.name}
-Email: {inquiry.email}
-Phone: {inquiry.phone}
-
-Message:
-{inquiry.message}
-"""
-
-            send_mail(
-                subject,
-                message,
-                settings.DEFAULT_FROM_EMAIL,
-                [settings.CONTACT_EMAIL],
-                fail_silently=False,
-            )
 
             return redirect(
                 reverse("horses:inquiry_success") + f"?horse={horse.program_id}"
