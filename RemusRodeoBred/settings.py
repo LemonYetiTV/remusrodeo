@@ -28,7 +28,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
-    "storages",
     "horses",
 ]
 
@@ -97,41 +96,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-R2_ACCOUNT_ID = os.environ.get("R2_ACCOUNT_ID")
-R2_ACCESS_KEY_ID = os.environ.get("R2_ACCESS_KEY_ID")
-R2_SECRET_ACCESS_KEY = os.environ.get("R2_SECRET_ACCESS_KEY")
-R2_BUCKET_NAME = os.environ.get("R2_BUCKET_NAME")
-R2_PUBLIC_MEDIA_URL = os.environ.get("R2_PUBLIC_MEDIA_URL")
-
-if R2_PUBLIC_MEDIA_URL:
-    MEDIA_URL = f"{R2_PUBLIC_MEDIA_URL.rstrip('/')}/"
-else:
-    MEDIA_URL = "/media/"
-
-STORAGES = {
-    "default": {
-        "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": {
-            "bucket_name": R2_BUCKET_NAME,
-            "access_key": R2_ACCESS_KEY_ID,
-            "secret_key": R2_SECRET_ACCESS_KEY,
-            "endpoint_url": f"https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com" if R2_ACCOUNT_ID else None,
-            "region_name": "auto",
-            "default_acl": None,
-            "querystring_auth": False,
-            "file_overwrite": False,
-            **(
-                {
-                    "custom_domain": R2_PUBLIC_MEDIA_URL.replace("https://", "").replace("http://", "").rstrip("/")
-                }
-                if R2_PUBLIC_MEDIA_URL
-                else {}
-            ),
-        },
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
