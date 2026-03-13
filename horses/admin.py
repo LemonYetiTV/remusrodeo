@@ -4,7 +4,7 @@ from django.template.response import TemplateResponse
 from django.urls import path, reverse
 from django.utils.html import format_html
 
-from .models import Horse, HorsePhoto, Inquiry, TrainingUpdate
+from .models import Horse, HorsePhoto, Inquiry, TrainingUpdate, HorseEvaluation
 from .utils import generate_facebook_flyer
 
 
@@ -20,6 +20,46 @@ class TrainingUpdateInline(admin.StackedInline):
     extra = 0
     fields = ("title", "update_date", "body", "is_published")
     ordering = ("-update_date",)
+
+
+class HorseEvaluationInline(admin.StackedInline):
+    model = HorseEvaluation
+    extra = 0
+    max_num = 1
+    can_delete = True
+    fieldsets = (
+        ("Intake Information", {
+            "fields": (
+                "arrival_date",
+                "previous_owner",
+                "purchase_source",
+            )
+        }),
+        ("Condition & Temperament", {
+            "fields": (
+                "body_condition",
+                "soundness_observations",
+                "temperament_notes",
+                "ground_manners",
+                "handling_behavior",
+            )
+        }),
+        ("Training Assessment", {
+            "fields": (
+                "training_level",
+                "discipline_exposure",
+                "behavioral_notes",
+            )
+        }),
+        ("Care & Health Notes", {
+            "fields": (
+                "veterinary_notes",
+                "farrier_status",
+                "vaccination_status",
+                "dental_status",
+            )
+        }),
+    )
 
 
 @admin.register(Horse)
@@ -39,6 +79,7 @@ class HorseAdmin(admin.ModelAdmin):
         "is_sold",
         "is_new",
     )
+
     list_filter = (
         "sex",
         "discipline_focus",
@@ -47,13 +88,18 @@ class HorseAdmin(admin.ModelAdmin):
         "is_published",
         "is_sold",
     )
+
     search_fields = (
         "program_id",
         "barn_name",
         "registered_name",
     )
 
-    inlines = [HorsePhotoInline, TrainingUpdateInline]
+    inlines = [
+        HorseEvaluationInline,
+        HorsePhotoInline,
+        TrainingUpdateInline,
+    ]
 
     def get_readonly_fields(self, request, obj=None):
         base_fields = ("created_at", "updated_at", "is_new", "flyer_preview")
@@ -176,6 +222,7 @@ class HorseAdmin(admin.ModelAdmin):
             return HttpResponseRedirect(reverse("admin:horses_horse_changelist"))
 
         listing_url = request.build_absolute_uri(horse.get_absolute_url())
+
         post_text = f"""{horse.program_id} | {horse.barn_name}
 
 {horse.age}yo | {horse.height_hands}h | {horse.get_sex_display()}
@@ -194,6 +241,7 @@ Video + Details:
             "title": f"Facebook post text for {horse.program_id}",
             "post_text": post_text,
         }
+
         return TemplateResponse(
             request,
             "admin/horses/horse/facebook_post.html",
@@ -220,5 +268,12 @@ class TrainingUpdateAdmin(admin.ModelAdmin):
 class InquiryAdmin(admin.ModelAdmin):
     list_display = ("name", "horse", "email", "phone", "created_at", "is_contacted")
     list_filter = ("is_contacted", "created_at")
-    search_fields = ("name", "email", "phone", "message", "horse__program_id", "horse__barn_name")
+    search_fields = (
+        "name",
+        "email",
+        "phone",
+        "message",
+        "horse__program_id",
+        "horse__barn_name",
+    )
     ordering = ("-created_at",)

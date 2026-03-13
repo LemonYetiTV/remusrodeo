@@ -219,6 +219,46 @@ class Horse(models.Model):
         return reverse("horses:horse_detail", kwargs={"slug": self.slug})
 
 
+class HorseEvaluation(models.Model):
+    horse = models.OneToOneField(
+        Horse,
+        on_delete=models.CASCADE,
+        related_name="evaluation",
+    )
+
+    arrival_date = models.DateField(blank=True, null=True)
+    previous_owner = models.CharField(max_length=255, blank=True)
+    purchase_source = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Auction, private seller, breeder, trainer, etc.",
+    )
+
+    body_condition = models.CharField(max_length=100, blank=True)
+    soundness_observations = models.TextField(blank=True)
+    temperament_notes = models.TextField(blank=True)
+    ground_manners = models.TextField(blank=True)
+    handling_behavior = models.TextField(blank=True)
+    training_level = models.CharField(max_length=255, blank=True)
+    discipline_exposure = models.TextField(blank=True)
+    behavioral_notes = models.TextField(blank=True)
+    veterinary_notes = models.TextField(blank=True)
+    farrier_status = models.CharField(max_length=255, blank=True)
+    vaccination_status = models.CharField(max_length=255, blank=True)
+    dental_status = models.CharField(max_length=255, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["horse__program_id"]
+        verbose_name = "Horse Intake Evaluation"
+        verbose_name_plural = "Horse Intake Evaluations"
+
+    def __str__(self) -> str:
+        return f"Evaluation - {self.horse.program_id}"
+
+
 class HorsePhoto(models.Model):
     horse = models.ForeignKey(
         Horse,
