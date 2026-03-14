@@ -1,15 +1,12 @@
 :root {
-    --remus-navy: #163047;
-    --remus-slate: #244a63;
-    --remus-gold: #d4af37;
-    --remus-tan: #f6f1e7;
+    --remus-black: #000000;
+    --remus-body: #f5f3ef;
     --remus-card: #ffffff;
-    --remus-border: #d8dee6;
-    --remus-text: #1f2933;
-    --remus-muted: #5b6875;
-    --remus-success: #166534;
-    --remus-danger: #991b1b;
-    --remus-shadow: 0 10px 30px rgba(22, 48, 71, 0.10);
+    --remus-border: #c79054;
+    --remus-text: #1e1e1e;
+    --remus-subtitle: #5c5c5c;
+    --remus-white: #ffffff;
+    --remus-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
     --remus-radius: 18px;
     --remus-max-width: 1320px;
 }
@@ -21,7 +18,7 @@ body {
 
 body,
 .login {
-    background: #f8f9fb;
+    background: var(--remus-body);
     color: var(--remus-text);
 }
 
@@ -29,7 +26,6 @@ body,
     min-width: 0;
 }
 
-/* Kill Django sidebar duplication */
 #nav-sidebar {
     display: none !important;
 }
@@ -43,18 +39,19 @@ body,
 }
 
 #header {
-    background: linear-gradient(90deg, var(--remus-navy) 0%, var(--remus-slate) 100%);
-    color: #fff;
-    box-shadow: var(--remus-shadow);
+    background: var(--remus-black);
+    color: var(--remus-white);
+    box-shadow: none;
+    border-bottom: 2px solid var(--remus-border);
 }
 
     #header a:link,
     #header a:visited {
-        color: #fff;
+        color: var(--remus-white);
     }
 
 #site-name a {
-    color: #fff !important;
+    color: var(--remus-white) !important;
     font-weight: 700;
     letter-spacing: 0.02em;
 }
@@ -79,13 +76,13 @@ body,
 }
 
 div.breadcrumbs {
-    background: #eef3f7;
-    color: var(--remus-muted);
-    border-bottom: 1px solid rgba(22, 48, 71, 0.08);
+    background: transparent;
+    color: var(--remus-subtitle);
+    border-bottom: 1px solid rgba(199, 144, 84, 0.18);
 }
 
     div.breadcrumbs a {
-        color: var(--remus-slate);
+        color: var(--remus-text);
         font-weight: 600;
     }
 
@@ -106,7 +103,6 @@ div.breadcrumbs {
     display: none;
 }
 
-/* Dashboard */
 .remus-dashboard-page {
     display: flex;
     flex-direction: column;
@@ -132,21 +128,29 @@ div.breadcrumbs {
 }
 
 .remus-dashboard-intro {
-    background: linear-gradient(135deg, var(--remus-navy) 0%, var(--remus-slate) 100%);
-    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 28px;
+    min-height: 280px;
+    padding: 36px;
     border-radius: var(--remus-radius);
-    padding: 32px;
+    background: var(--remus-black);
+    color: var(--remus-white);
+    border: 2px solid var(--remus-border);
     box-shadow: var(--remus-shadow);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    min-height: 220px;
 }
 
-    .remus-dashboard-intro h1 {
-        margin: 0 0 12px;
-        font-size: 34px;
-        line-height: 1.1;
-        color: #fff;
-    }
+.remus-intro-text {
+    max-width: 560px;
+}
+
+.remus-dashboard-intro h1 {
+    margin: 0 0 12px;
+    font-size: 34px;
+    line-height: 1.1;
+    color: var(--remus-white);
+}
 
 .remus-kicker {
     margin: 0 0 10px;
@@ -154,16 +158,31 @@ div.breadcrumbs {
     letter-spacing: 0.16em;
     font-size: 12px;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.72);
+    color: var(--remus-border);
 }
 
 .remus-subtitle {
     margin: 0;
     font-size: 16px;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.86);
+    color: rgba(255, 255, 255, 0.82);
     max-width: 640px;
 }
+
+.remus-intro-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 260px;
+}
+
+    .remus-intro-logo img {
+        width: 100%;
+        max-width: 240px;
+        max-height: 220px;
+        object-fit: contain;
+        display: block;
+    }
 
 .remus-quick-actions {
     display: grid;
@@ -176,10 +195,10 @@ div.breadcrumbs {
     flex-direction: column;
     justify-content: space-between;
     min-height: 120px;
-    padding: 18px 18px 16px;
+    padding: 20px;
     border-radius: 16px;
     background: var(--remus-card);
-    border: 1px solid rgba(22, 48, 71, 0.08);
+    border: 1px solid var(--remus-border);
     box-shadow: var(--remus-shadow);
     text-decoration: none !important;
     color: var(--remus-text) !important;
@@ -188,8 +207,8 @@ div.breadcrumbs {
 
     .remus-quick-card:hover {
         transform: translateY(-2px);
-        border-color: rgba(212, 175, 55, 0.45);
-        box-shadow: 0 14px 32px rgba(22, 48, 71, 0.14);
+        border-color: var(--remus-border);
+        box-shadow: 0 16px 28px rgba(0, 0, 0, 0.12);
     }
 
 .remus-quick-card__label {
@@ -202,20 +221,21 @@ div.breadcrumbs {
     margin-top: 12px;
     font-size: 13px;
     font-weight: 700;
-    color: var(--remus-slate);
+    color: var(--remus-border);
 }
 
 .remus-admin-card {
     background: var(--remus-card);
-    border: 1px solid rgba(22, 48, 71, 0.08);
+    border: 1px solid var(--remus-border);
     border-radius: var(--remus-radius);
     box-shadow: var(--remus-shadow);
     overflow: hidden;
 }
 
 .remus-admin-card__header {
-    background: linear-gradient(90deg, var(--remus-navy) 0%, var(--remus-slate) 100%);
+    background: var(--remus-black);
     padding: 16px 18px;
+    border-bottom: 1px solid var(--remus-border);
 }
 
     .remus-admin-card__header h2 {
@@ -223,7 +243,7 @@ div.breadcrumbs {
         font-size: 15px;
         letter-spacing: 0.06em;
         text-transform: uppercase;
-        color: #fff;
+        color: var(--remus-white);
     }
 
 .remus-admin-card__body {
@@ -236,14 +256,28 @@ div.breadcrumbs {
     padding: 0;
 }
 
+.remus-action-item,
 .remus-action-list__item {
     padding: 16px 18px;
-    border-bottom: 1px solid #edf2f7;
+    border-bottom: 1px solid rgba(199, 144, 84, 0.18);
 }
 
+    .remus-action-item:last-child,
     .remus-action-list__item:last-child {
         border-bottom: none;
     }
+
+    .remus-action-item a,
+    .remus-action-list__title a {
+        color: var(--remus-text);
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+        .remus-action-item a:hover,
+        .remus-action-list__title a:hover {
+            color: var(--remus-border);
+        }
 
 .remus-action-list__title {
     font-size: 14px;
@@ -251,29 +285,21 @@ div.breadcrumbs {
     line-height: 1.4;
 }
 
-    .remus-action-list__title a {
-        color: var(--remus-slate);
-        text-decoration: none;
-    }
-
-        .remus-action-list__title a:hover {
-            color: var(--remus-navy);
-        }
-
+.remus-action-meta,
 .remus-action-list__meta {
+    display: block;
     margin-top: 4px;
     font-size: 12px;
-    color: var(--remus-muted);
+    color: var(--remus-subtitle);
     text-transform: capitalize;
 }
 
 .remus-empty-state {
     padding: 18px;
     margin: 0;
-    color: var(--remus-muted);
+    color: var(--remus-subtitle);
 }
 
-/* General admin styling */
 .module,
 .inline-group,
 .submit-row,
@@ -281,7 +307,7 @@ div.breadcrumbs {
 .results,
 #content-related {
     background: var(--remus-card);
-    border: 1px solid rgba(22, 48, 71, 0.08);
+    border: 1px solid var(--remus-border);
     border-radius: var(--remus-radius);
     box-shadow: var(--remus-shadow);
     overflow: hidden;
@@ -290,12 +316,13 @@ div.breadcrumbs {
     .module h2,
     .module caption,
     .inline-group h2 {
-        background: linear-gradient(90deg, var(--remus-navy) 0%, var(--remus-slate) 100%);
-        color: #fff;
+        background: var(--remus-black);
+        color: var(--remus-white);
         padding: 14px 16px;
         font-size: 14px;
         letter-spacing: 0.04em;
         text-transform: uppercase;
+        border-bottom: 1px solid var(--remus-border);
     }
 
 #changelist {
@@ -317,7 +344,7 @@ div.breadcrumbs {
 }
 
 #changelist-filter a {
-    color: var(--remus-slate);
+    color: var(--remus-text);
     font-weight: 600;
 }
 
@@ -334,13 +361,13 @@ div.breadcrumbs {
     input[type="button"],
     .submit-row input,
     a.button {
-        background: linear-gradient(90deg, var(--remus-gold) 0%, #c69524 100%) !important;
-        color: #1f1f1f !important;
-        border: none !important;
+        background: var(--remus-border) !important;
+        color: var(--remus-white) !important;
+        border: 1px solid var(--remus-border) !important;
         border-radius: 999px !important;
         padding: 10px 16px !important;
         font-weight: 700 !important;
-        box-shadow: 0 6px 18px rgba(212, 175, 55, 0.24);
+        box-shadow: none;
     }
 
         .button:hover,
@@ -348,38 +375,40 @@ div.breadcrumbs {
         input[type="button"]:hover,
         .submit-row input:hover,
         a.button:hover {
-            filter: brightness(1.03);
+            background: #b97839 !important;
+            border-color: #b97839 !important;
             transform: translateY(-1px);
         }
 
     .object-tools a:link,
     .object-tools a:visited {
-        background: linear-gradient(90deg, var(--remus-gold) 0%, #c69524 100%);
-        color: #1f1f1f;
+        background: var(--remus-border);
+        color: var(--remus-white);
         border-radius: 999px;
         padding: 10px 14px;
         font-weight: 700;
-        border: none;
+        border: 1px solid var(--remus-border);
     }
 
     .object-tools a:hover {
-        background: linear-gradient(90deg, #e2be59 0%, #c69524 100%);
+        background: #b97839;
+        border-color: #b97839;
     }
 
 table thead th {
-    background: rgba(22, 48, 71, 0.04);
+    background: rgba(199, 144, 84, 0.08);
     color: var(--remus-text);
     border-bottom: 1px solid var(--remus-border);
     font-weight: 700;
 }
 
 #result_list tbody tr:hover {
-    background: rgba(36, 74, 99, 0.03);
+    background: rgba(199, 144, 84, 0.06);
 }
 
 .form-row {
     padding: 14px 16px;
-    border-bottom: 1px solid #edf2f7;
+    border-bottom: 1px solid rgba(199, 144, 84, 0.16);
 }
 
     .form-row:last-child {
@@ -391,23 +420,32 @@ textarea,
 select,
 .vTextField,
 .vLargeTextField {
-    border: 1px solid #cfd8e3 !important;
+    border: 1px solid rgba(199, 144, 84, 0.45) !important;
     border-radius: 10px !important;
     padding: 10px 12px !important;
     background: #fff !important;
+    color: var(--remus-text) !important;
 }
 
     input:focus,
     textarea:focus,
     select:focus {
-        border-color: var(--remus-gold) !important;
-        box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.16) !important;
+        border-color: var(--remus-border) !important;
+        box-shadow: 0 0 0 3px rgba(199, 144, 84, 0.14) !important;
         outline: none !important;
+    }
+
+a {
+    color: var(--remus-text);
+}
+
+    a:hover {
+        color: var(--remus-border);
     }
 
 .help,
 .helptext {
-    color: var(--remus-muted);
+    color: var(--remus-subtitle);
 }
 
 .messagelist li {
@@ -417,13 +455,13 @@ select,
 }
 
 .messagelist .success {
-    background: #ecfdf3;
-    color: var(--remus-success);
+    background: #eef8f0;
+    color: #1f5b2c;
 }
 
 .messagelist .error {
     background: #fef2f2;
-    color: var(--remus-danger);
+    color: #991b1b;
 }
 
 .login #container {
@@ -453,6 +491,16 @@ select,
     .remus-dashboard-sidebar {
         position: static;
     }
+
+    .remus-dashboard-intro {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .remus-intro-logo {
+        width: 100%;
+        justify-content: flex-start;
+    }
 }
 
 @media (max-width: 768px) {
@@ -471,5 +519,10 @@ select,
 
     .remus-quick-actions {
         grid-template-columns: 1fr;
+    }
+
+    .remus-intro-logo img {
+        max-width: 180px;
+        max-height: 160px;
     }
 }

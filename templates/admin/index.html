@@ -2,61 +2,99 @@
 {% load i18n static log %}
 
 {% block content %}
+
 <div class="remus-dashboard-page">
-    <div class="remus-dashboard-grid remus-dashboard-grid--top">
+
+    <div class="remus-dashboard-grid">
+
         <main class="remus-dashboard-main">
+
             <section class="remus-dashboard-intro">
-                <p class="remus-kicker">Remus Rodeo</p>
-                <h1>Stable Management Control Panel</h1>
-                <p class="remus-subtitle">
-                    Manage horses, photos, training updates, flyers, and daily barn operations.
-                </p>
+
+                <div class="remus-intro-text">
+                    <p class="remus-kicker">Remus Rodeo</p>
+                    <h1>Stable Management Control Panel</h1>
+                    <p class="remus-subtitle">
+                        Manage horses, photos, training updates, flyers, and daily barn operations.
+                    </p>
+                </div>
+
+                <div class="remus-intro-logo">
+                    <img src="{% static 'admin/img/rr_logo.png' %}" alt="RR Thoroughbreds">
+                </div>
+
             </section>
 
+
             <section class="remus-quick-actions">
+
                 {% for app in app_list %}
                 {% for model in app.models %}
                 {% if model.admin_url %}
                 <a href="{{ model.admin_url }}" class="remus-quick-card">
-                    <span class="remus-quick-card__label">{{ model.name }}</span>
-                    <span class="remus-quick-card__action">Open</span>
+
+                    <span class="remus-quick-card__label">
+                        {{ model.name }}
+                    </span>
+
+                    <span class="remus-quick-card__action">
+                        Open →
+                    </span>
+
                 </a>
                 {% endif %}
                 {% endfor %}
                 {% endfor %}
+
             </section>
+
         </main>
 
+
         <aside class="remus-dashboard-sidebar">
-            <section class="remus-admin-card remus-admin-card--sidebar">
+
+            <section class="remus-admin-card">
+
                 <div class="remus-admin-card__header">
-                    <h2>{% translate "Recent Actions" %}</h2>
+                    <h2>Recent Actions</h2>
                 </div>
+
                 <div class="remus-admin-card__body">
+
                     {% get_admin_log 10 as admin_log for_user user %}
-                    {% if not admin_log %}
-                    <p class="remus-empty-state">{% translate "No recent actions available." %}</p>
-                    {% else %}
+
                     <ul class="remus-action-list">
+
                         {% for entry in admin_log %}
-                        <li class="remus-action-list__item">
-                            <div class="remus-action-list__title">
-                                {% if entry.is_deletion or not entry.get_admin_url %}
+
+                        <li class="remus-action-item">
+
+                            {% if entry.is_deletion or not entry.get_admin_url %}
+                            {{ entry.object_repr }}
+                            {% else %}
+                            <a href="{{ entry.get_admin_url }}">
                                 {{ entry.object_repr }}
-                                {% else %}
-                                <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
-                                {% endif %}
-                            </div>
-                            <div class="remus-action-list__meta">
-                                {{ entry.content_type.name|capfirst }}
-                            </div>
+                            </a>
+                            {% endif %}
+
+                            <span class="remus-action-meta">
+                                {{ entry.content_type.name }}
+                            </span>
+
                         </li>
+
                         {% endfor %}
+
                     </ul>
-                    {% endif %}
+
                 </div>
+
             </section>
+
         </aside>
+
     </div>
+
 </div>
+
 {% endblock %}
