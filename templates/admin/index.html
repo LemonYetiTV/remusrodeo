@@ -1,5 +1,5 @@
 {% extends "admin/base_site.html" %}
-{% load i18n static %}
+{% load i18n static log %}
 
 {% block content %}
 <div class="remus-dashboard-page">
@@ -13,7 +13,6 @@
         </div>
 
         <div class="remus-quick-actions">
-            {% if app_list %}
             {% for app in app_list %}
             {% for model in app.models %}
             {% if model.admin_url %}
@@ -24,7 +23,6 @@
             {% endif %}
             {% endfor %}
             {% endfor %}
-            {% endif %}
         </div>
     </div>
 
@@ -78,7 +76,6 @@
                     <h2>{% translate "Recent Actions" %}</h2>
                 </div>
                 <div class="remus-admin-card__body">
-                    {% load log %}
                     {% get_admin_log 10 as admin_log for_user user %}
                     {% if not admin_log %}
                     <p class="remus-empty-state">{% translate "No recent actions available." %}</p>
