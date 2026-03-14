@@ -1,10 +1,108 @@
-{% extends "admin/index.html" %}
+{% extends "admin/base_site.html" %}
 {% load i18n static %}
 
 {% block content %}
-<div class="remus-dashboard-shell">
-    <div class="remus-dashboard-main">
-        {{ block.super }}
+<div class="remus-dashboard-page">
+    <div class="remus-dashboard-top">
+        <div class="remus-dashboard-intro">
+            <p class="remus-kicker">Remus Rodeo</p>
+            <h1>Stable Management Control Panel</h1>
+            <p class="remus-subtitle">
+                Manage horses, photos, training updates, flyers, and daily barn operations.
+            </p>
+        </div>
+
+        <div class="remus-quick-actions">
+            {% if app_list %}
+            {% for app in app_list %}
+            {% for model in app.models %}
+            {% if model.admin_url %}
+            <a href="{{ model.admin_url }}" class="remus-quick-card">
+                <span class="remus-quick-card__label">{{ model.name }}</span>
+                <span class="remus-quick-card__action">Open</span>
+            </a>
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="remus-dashboard-grid">
+        <main class="remus-dashboard-main">
+            {% if app_list %}
+            {% for app in app_list %}
+            <section class="remus-admin-card">
+                <div class="remus-admin-card__header">
+                    <h2>{{ app.name }}</h2>
+                </div>
+                <div class="remus-admin-card__body">
+                    <table class="remus-admin-table">
+                        <tbody>
+                            {% for model in app.models %}
+                            <tr>
+                                <th scope="row">
+                                    {% if model.admin_url %}
+                                    <a href="{{ model.admin_url }}">{{ model.name }}</a>
+                                    {% else %}
+                                    {{ model.name }}
+                                    {% endif %}
+                                </th>
+                                <td class="remus-admin-table__actions">
+                                    {% if model.add_url %}
+                                    <a href="{{ model.add_url }}">Add</a>
+                                    {% endif %}
+                                    {% if model.admin_url %}
+                                    <a href="{{ model.admin_url }}">Manage</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            {% endfor %}
+            {% else %}
+            <section class="remus-admin-card">
+                <div class="remus-admin-card__body">
+                    <p>{% translate "You don’t have permission to view or edit anything." %}</p>
+                </div>
+            </section>
+            {% endif %}
+        </main>
+
+        <aside class="remus-dashboard-sidebar">
+            <section class="remus-admin-card remus-admin-card--sidebar">
+                <div class="remus-admin-card__header">
+                    <h2>{% translate "Recent Actions" %}</h2>
+                </div>
+                <div class="remus-admin-card__body">
+                    {% load log %}
+                    {% get_admin_log 10 as admin_log for_user user %}
+                    {% if not admin_log %}
+                    <p class="remus-empty-state">{% translate "No recent actions available." %}</p>
+                    {% else %}
+                    <ul class="remus-action-list">
+                        {% for entry in admin_log %}
+                        <li class="remus-action-list__item">
+                            <div class="remus-action-list__title">
+                                {% if entry.is_deletion or not entry.get_admin_url %}
+                                {{ entry.object_repr }}
+                                {% else %}
+                                <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+                                {% endif %}
+                            </div>
+                            <div class="remus-action-list__meta">
+                                {{ entry.content_type.name|capfirst }}
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </section>
+        </aside>
     </div>
 </div>
 {% endblock %}

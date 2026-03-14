@@ -10,8 +10,8 @@
     --remus-success: #166534;
     --remus-danger: #991b1b;
     --remus-shadow: 0 10px 30px rgba(22, 48, 71, 0.10);
-    --remus-radius: 14px;
-    --remus-max-width: 1280px;
+    --remus-radius: 18px;
+    --remus-max-width: 1320px;
 }
 
 html,
@@ -21,7 +21,7 @@ body {
 
 body,
 .login {
-    background: linear-gradient(180deg, #f6f1e7 0%, #f8fafc 100%);
+    background: linear-gradient(180deg, #f6f1e7 0%, #f8f6f1 100%);
     color: var(--remus-text);
 }
 
@@ -66,9 +66,9 @@ body,
 }
 
 div.breadcrumbs {
-    background: rgba(212, 175, 55, 0.10);
+    background: rgba(212, 175, 55, 0.08);
     color: var(--remus-muted);
-    border-bottom: 1px solid rgba(36, 74, 99, 0.12);
+    border-bottom: 1px solid rgba(22, 48, 71, 0.08);
 }
 
     div.breadcrumbs a {
@@ -86,18 +86,247 @@ div.breadcrumbs {
 }
 
 #content {
-    padding: 32px 24px 40px;
+    padding: 32px 24px 48px;
 }
 
+.dashboard #content > h1 {
+    display: none;
+}
+
+/* Dashboard */
+.remus-dashboard-page {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.remus-dashboard-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: stretch;
+}
+
+.remus-dashboard-intro {
+    background: linear-gradient(135deg, rgba(22, 48, 71, 0.98) 0%, rgba(36, 74, 99, 0.96) 100%);
+    color: #fff;
+    border-radius: var(--remus-radius);
+    padding: 32px;
+    box-shadow: var(--remus-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+    .remus-dashboard-intro h1 {
+        margin: 0 0 12px;
+        font-size: 34px;
+        line-height: 1.1;
+        color: #fff;
+    }
+
+.remus-kicker {
+    margin: 0 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.remus-subtitle {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.86);
+    max-width: 640px;
+}
+
+.remus-quick-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.remus-quick-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 108px;
+    padding: 18px 18px 16px;
+    border-radius: 16px;
+    background: var(--remus-card);
+    border: 1px solid rgba(22, 48, 71, 0.08);
+    box-shadow: var(--remus-shadow);
+    text-decoration: none !important;
+    color: var(--remus-text) !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+    .remus-quick-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(212, 175, 55, 0.45);
+        box-shadow: 0 14px 32px rgba(22, 48, 71, 0.14);
+    }
+
+.remus-quick-card__label {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.remus-quick-card__action {
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--remus-slate);
+}
+
+.remus-dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) 340px;
+    gap: 28px;
+    align-items: start;
+}
+
+.remus-dashboard-main {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.remus-dashboard-sidebar {
+    position: sticky;
+    top: 24px;
+}
+
+.remus-admin-card {
+    background: var(--remus-card);
+    border: 1px solid rgba(22, 48, 71, 0.08);
+    border-radius: var(--remus-radius);
+    box-shadow: var(--remus-shadow);
+    overflow: hidden;
+}
+
+.remus-admin-card__header {
+    background: linear-gradient(90deg, var(--remus-navy) 0%, var(--remus-slate) 100%);
+    padding: 16px 18px;
+}
+
+    .remus-admin-card__header h2 {
+        margin: 0;
+        font-size: 15px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #fff;
+    }
+
+.remus-admin-card__body {
+    padding: 0;
+}
+
+.remus-admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+    .remus-admin-table th,
+    .remus-admin-table td {
+        padding: 16px 18px;
+        border-bottom: 1px solid #edf2f7;
+        vertical-align: middle;
+    }
+
+    .remus-admin-table tr:last-child th,
+    .remus-admin-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .remus-admin-table th {
+        width: 70%;
+        text-align: left;
+        white-space: normal;
+        font-weight: 700;
+    }
+
+        .remus-admin-table th a {
+            color: var(--remus-slate);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+            .remus-admin-table th a:hover {
+                color: var(--remus-navy);
+            }
+
+.remus-admin-table__actions {
+    text-align: right;
+    white-space: nowrap;
+}
+
+    .remus-admin-table__actions a {
+        display: inline-block;
+        margin-left: 14px;
+        color: var(--remus-slate);
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+        .remus-admin-table__actions a:hover {
+            color: var(--remus-navy);
+        }
+
+.remus-action-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.remus-action-list__item {
+    padding: 16px 18px;
+    border-bottom: 1px solid #edf2f7;
+}
+
+    .remus-action-list__item:last-child {
+        border-bottom: none;
+    }
+
+.remus-action-list__title {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+    .remus-action-list__title a {
+        color: var(--remus-slate);
+        text-decoration: none;
+    }
+
+        .remus-action-list__title a:hover {
+            color: var(--remus-navy);
+        }
+
+.remus-action-list__meta {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--remus-muted);
+    text-transform: capitalize;
+}
+
+.remus-empty-state {
+    padding: 18px;
+    margin: 0;
+    color: var(--remus-muted);
+}
+
+/* General admin styling */
 .module,
 .inline-group,
 .submit-row,
-.dashboard #content-main .module,
 #changelist-filter,
 .results,
 #content-related {
     background: var(--remus-card);
-    border: 1px solid rgba(36, 74, 99, 0.12);
+    border: 1px solid rgba(22, 48, 71, 0.08);
     border-radius: var(--remus-radius);
     box-shadow: var(--remus-shadow);
     overflow: hidden;
@@ -113,101 +342,6 @@ div.breadcrumbs {
         letter-spacing: 0.04em;
         text-transform: uppercase;
     }
-
-.dashboard #content > h1 {
-    display: none;
-}
-
-.remus-dashboard-shell {
-    width: 100%;
-}
-
-.dashboard .remus-dashboard-main {
-    width: 100%;
-}
-
-.dashboard #content-main {
-    width: 100%;
-    float: none;
-}
-
-.dashboard #content-related {
-    float: none;
-    width: 100%;
-    margin: 0;
-}
-
-.dashboard .remus-dashboard-main {
-    display: grid;
-    grid-template-columns: minmax(0, 1.9fr) minmax(280px, 340px);
-    gap: 32px;
-    align-items: start;
-}
-
-    .dashboard .remus-dashboard-main::after {
-        content: "";
-        display: block;
-        clear: both;
-    }
-
-.dashboard #content-main {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-}
-
-    .dashboard #content-main .module {
-        margin: 0;
-    }
-
-        .dashboard #content-main .module table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-.dashboard .module table th,
-.dashboard .module table td {
-    padding: 14px 16px;
-    vertical-align: middle;
-}
-
-.dashboard .module table tr {
-    border-bottom: 1px solid #edf2f7;
-}
-
-    .dashboard .module table tr:last-child {
-        border-bottom: none;
-    }
-
-.dashboard .module table th {
-    width: 60%;
-}
-
-    .dashboard .module table th a,
-    .dashboard .module table td a {
-        font-weight: 600;
-    }
-
-.dashboard #content-related .module {
-    margin: 0;
-}
-
-.dashboard #content-related h2 {
-    background: transparent;
-    color: var(--remus-navy);
-    padding: 18px 18px 10px;
-    font-size: 16px;
-    letter-spacing: 0.04em;
-}
-
-.dashboard #content-related .actionlist {
-    padding: 0 18px 18px;
-}
-
-.dashboard #content-related .module h3 {
-    padding: 0 18px;
-    color: var(--remus-text);
-}
 
 #changelist {
     display: block;
@@ -276,14 +410,6 @@ div.breadcrumbs {
     .object-tools a:hover {
         background: linear-gradient(90deg, #e2be59 0%, #c69524 100%);
     }
-
-.selector h2,
-.calendar caption,
-.calendarbox h2,
-.clockbox h2 {
-    background: linear-gradient(90deg, var(--remus-navy) 0%, var(--remus-slate) 100%);
-    color: #fff;
-}
 
 table thead th {
     background: rgba(22, 48, 71, 0.04);
@@ -371,8 +497,13 @@ select,
 }
 
 @media (max-width: 1100px) {
-    .dashboard .remus-dashboard-main {
+    .remus-dashboard-top,
+    .remus-dashboard-grid {
         grid-template-columns: 1fr;
+    }
+
+    .remus-dashboard-sidebar {
+        position: static;
     }
 }
 
@@ -380,23 +511,25 @@ select,
     #content {
         padding: 20px 16px 28px;
     }
-}
-/* Fix dashboard module table layout */
-.dashboard #content-main .module table th {
-    width: auto;
-    white-space: nowrap;
-}
 
-.dashboard #content-main .module table td {
-    white-space: nowrap;
-}
+    .remus-dashboard-intro {
+        padding: 24px;
+    }
 
-/* Prevent Django from collapsing the first column */
-.dashboard #content-main .module table {
-    table-layout: auto;
-}
+        .remus-dashboard-intro h1 {
+            font-size: 28px;
+        }
 
-/* Give the main column more breathing room */
-.dashboard .remus-dashboard-main {
-    grid-template-columns: minmax(0, 2.3fr) 320px;
+    .remus-quick-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .remus-admin-table th,
+    .remus-admin-table td {
+        padding: 14px;
+    }
+
+    .remus-admin-table__actions a {
+        margin-left: 10px;
+    }
 }
