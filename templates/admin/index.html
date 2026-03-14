@@ -1,7 +1,9 @@
 {% extends "admin/base_site.html" %}
-{% load i18n static log %}
+{% load i18n static log admin_dashboard %}
 
 {% block content %}
+
+{% dashboard_stats as dashboard %}
 
 <div class="remus-dashboard-page">
 
@@ -18,6 +20,15 @@
                         Manage horses, photos, training updates, flyers, and daily barn operations.
                     </p>
 
+                    {% if dashboard.uncontacted_inquiries > 0 %}
+                    <div class="remus-alert-banner">
+                        <span class="remus-alert-banner__badge">{{ dashboard.uncontacted_inquiries }}</span>
+                        <span class="remus-alert-banner__text">
+                            inquiry{{ dashboard.uncontacted_inquiries|pluralize }} need{{ dashboard.uncontacted_inquiries|pluralize:"s," }} a response
+                        </span>
+                    </div>
+                    {% endif %}
+
                     <div class="remus-hero-actions">
                         <a href="{% url 'admin:horses_horse_add' %}" class="remus-hero-btn remus-hero-btn--primary">
                             Add Horse
@@ -31,6 +42,9 @@
                         <a href="{% url 'admin:horses_trainingupdate_add' %}" class="remus-hero-btn remus-hero-btn--secondary">
                             Training Update
                         </a>
+                        <a href="{% url 'admin:horses_inquiry_changelist' %}" class="remus-hero-btn remus-hero-btn--secondary">
+                            Inquiries
+                        </a>
                     </div>
                 </div>
 
@@ -40,19 +54,49 @@
 
             </section>
 
-            <section class="remus-quick-actions">
+            <section class="remus-stats-grid">
+                <div class="remus-stat-card">
+                    <span class="remus-stat-card__label">Total Horses</span>
+                    <span class="remus-stat-card__value">{{ dashboard.total_horses }}</span>
+                </div>
 
+                <div class="remus-stat-card">
+                    <span class="remus-stat-card__label">Available for Sale</span>
+                    <span class="remus-stat-card__value">{{ dashboard.available_for_sale }}</span>
+                </div>
+
+                <div class="remus-stat-card">
+                    <span class="remus-stat-card__label">Sold</span>
+                    <span class="remus-stat-card__value">{{ dashboard.sold_horses }}</span>
+                </div>
+
+                <div class="remus-stat-card">
+                    <span class="remus-stat-card__label">Total Inquiries</span>
+                    <span class="remus-stat-card__value">{{ dashboard.total_inquiries }}</span>
+                </div>
+
+                <div class="remus-stat-card remus-stat-card--alert">
+                    <span class="remus-stat-card__label">Needs Response</span>
+                    <span class="remus-stat-card__value">{{ dashboard.uncontacted_inquiries }}</span>
+                </div>
+            </section>
+
+            <section class="remus-quick-actions">
                 {% for app in app_list %}
                 {% for model in app.models %}
                 {% if model.admin_url %}
-                <a href="{{ model.admin_url }}" class="remus-quick-card">
-                    <span class="remus-quick-card__label">{{ model.name }}</span>
+                <a href="{{ model.admin_url }}" class="remus-quick-card{% if 'inquiry' in model.admin_url and dashboard.uncontacted_inquiries > 0 %} remus-quick-card--alert{% endif %}">
+                    <span class="remus-quick-card__label">
+                        {{ model.name }}
+                        {% if 'inquiry' in model.admin_url and dashboard.uncontacted_inquiries > 0 %}
+                        <span class="remus-inline-badge">{{ dashboard.uncontacted_inquiries }}</span>
+                        {% endif %}
+                    </span>
                     <span class="remus-quick-card__action">Open →</span>
                 </a>
                 {% endif %}
                 {% endfor %}
                 {% endfor %}
-
             </section>
 
         </main>

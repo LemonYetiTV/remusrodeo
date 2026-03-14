@@ -572,3 +572,118 @@ a {
 .dashboard .breadcrumbs {
     display: none;
 }
+.remus-alert-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+    margin-bottom: 4px;
+    padding: 10px 14px;
+    background: rgba(199, 144, 84, 0.12);
+    border: 1px solid var(--remus-border);
+    border-radius: 999px;
+}
+
+.remus-alert-banner__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 8px;
+    background: var(--remus-border);
+    color: var(--remus-white);
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.remus-alert-banner__text {
+    color: var(--remus-white);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.remus-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.remus-stat-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    background: var(--remus-card);
+    border: 1px solid var(--remus-border);
+    border-radius: 16px;
+    box-shadow: var(--remus-shadow);
+}
+
+.remus-stat-card__label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--remus-subtitle);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.remus-stat-card__value {
+    font-size: 34px;
+    line-height: 1;
+    font-weight: 800;
+    color: var(--remus-text);
+}
+
+.remus-stat-card--alert {
+    background: #fff7f0;
+    border-color: var(--remus-border);
+}
+
+    .remus-stat-card--alert .remus-stat-card__value {
+        color: #9a4f10;
+    }
+
+.remus-quick-card--alert {
+    border-width: 2px;
+    box-shadow: 0 0 0 2px rgba(199, 144, 84, 0.12), var(--remus-shadow);
+}
+
+.remus-inline-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 7px;
+    margin-left: 8px;
+    background: var(--remus-border);
+    color: var(--remus-white);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    vertical-align: middle;
+}
+
+@media (max-width: 1200px) {
+    .remus-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .remus-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .remus-alert-banner {
+        width: 100%;
+        justify-content: flex-start;
+        border-radius: 14px;
+    }
+
+    .remus-alert-banner__text {
+        font-size: 13px;
+    }
+}
