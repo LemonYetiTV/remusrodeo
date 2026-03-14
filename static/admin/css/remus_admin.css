@@ -381,3 +381,22 @@ select,
         padding: 20px 16px 28px;
     }
 }
+/* Fix dashboard module table layout */
+.dashboard #content-main .module table th {
+    width: auto;
+    white-space: nowrap;
+}
+
+.dashboard #content-main .module table td {
+    white-space: nowrap;
+}
+
+/* Prevent Django from collapsing the first column */
+.dashboard #content-main .module table {
+    table-layout: auto;
+}
+
+/* Give the main column more breathing room */
+.dashboard .remus-dashboard-main {
+    grid-template-columns: minmax(0, 2.3fr) 320px;
+}
