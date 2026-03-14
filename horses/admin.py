@@ -12,6 +12,9 @@ from django.utils.html import format_html
 from .models import Horse, HorseEvaluation, HorsePhoto, Inquiry, TrainingUpdate
 from .utils import generate_facebook_flyer
 
+admin.site.site_header = "Remus Rodeo"
+admin.site.site_title = "Stable Management Hub"
+admin.site.index_title = "Stable Management Hub"
 
 TRAINER_GROUP_NAME = "TrainerGroup"
 
