@@ -54,8 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="horses\static\" />
+    <Folder Include="horses\static\admin\css\" />
     <Folder Include="horses\static\images\" />
     <Folder Include="horses\static\css\" />
+    <Folder Include="horses\static\admin\" />
     <Folder Include="horses\templates\admin\horses\" />
     <Folder Include="horses\templates\admin\horses\horse\" />
     <Folder Include="horses\templates\horses\" />
@@ -68,13 +70,20 @@
     <Folder Include="media\horses\" />
     <Folder Include="media\horses\featured\" />
     <Folder Include="media\horses\gallery\" />
+    <Folder Include="static\" />
+    <Folder Include="static\admin\" />
+    <Folder Include="static\admin\css\" />
+    <Folder Include="templates\" />
     <Folder Include="RemusRodeoBred\" />
+    <Folder Include="templates\admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="static\admin\css\remus_admin.css" />
     <Content Include="horses\static\css\site.css" />
     <Content Include="horses\static\images\horse_silhouette.png" />
     <Content Include="horses\static\images\rr_thoroughbreds_logo.png" />
+    <Content Include="templates\admin\base_site.html" />
     <Content Include="horses\templates\admin\horses\horse\change_form.html" />
     <Content Include="horses\templates\admin\horses\horse\facebook_post.html" />
     <Content Include="horses\templates\horses\base.html" />
