@@ -20,6 +20,13 @@ def _is_superuser(request):
     return bool(request.user and request.user.is_active and request.user.is_superuser)
 
 
+class AdminBrandingMixin:
+    class Media:
+        css = {
+            "all": ("admin/css/remus_admin.css",)
+        }
+
+
 class TrainerVisibleAdminMixin:
     def has_module_permission(self, request):
         if _is_superuser(request):
@@ -191,7 +198,7 @@ class HorseEvaluationInline(admin.StackedInline):
 
 
 @admin.register(Horse)
-class HorseAdmin(TrainerVisibleAdminMixin, admin.ModelAdmin):
+class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin):
     change_form_template = "admin/horses/horse/change_form.html"
 
     list_display = (
@@ -312,12 +319,12 @@ class HorseAdmin(TrainerVisibleAdminMixin, admin.ModelAdmin):
         image = getattr(obj, "featured_photo", None)
         if image:
             return format_html(
-                '<img src="{}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid #d1d5db;" />',
+                '<img src="{}" style="width:72px;height:72px;object-fit:cover;border-radius:10px;border:1px solid #d1d5db;" />',
                 image.url,
             )
         return format_html(
             '<div style="width:72px;height:72px;display:flex;align-items:center;justify-content:center;'
-            'border:1px dashed #9ca3af;border-radius:8px;color:#6b7280;font-size:11px;">No Photo</div>'
+            'border:1px dashed #9ca3af;border-radius:10px;color:#6b7280;font-size:11px;">No Photo</div>'
         )
 
     photo_thumb.short_description = "Photo"
@@ -506,7 +513,7 @@ Video + Details:
 
 
 @admin.register(HorsePhoto)
-class HorsePhotoAdmin(TrainerVisibleAdminMixin, admin.ModelAdmin):
+class HorsePhotoAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin):
     list_display = ("photo_preview", "horse", "caption", "sort_order", "uploaded_at")
     list_display_links = ("photo_preview", "horse")
     list_filter = ("horse",)
@@ -528,7 +535,7 @@ class HorsePhotoAdmin(TrainerVisibleAdminMixin, admin.ModelAdmin):
 
 
 @admin.register(TrainingUpdate)
-class TrainingUpdateAdmin(TrainerVisibleAdminMixin, admin.ModelAdmin):
+class TrainingUpdateAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin):
     list_display = ("horse", "title", "update_date", "publish_badge")
     list_filter = ("horse", "is_published")
     search_fields = ("horse__program_id", "horse__barn_name", "title")
@@ -550,7 +557,7 @@ class TrainingUpdateAdmin(TrainerVisibleAdminMixin, admin.ModelAdmin):
 
 
 @admin.register(HorseEvaluation)
-class HorseEvaluationAdmin(TrainerVisibleAdminMixin, admin.ModelAdmin):
+class HorseEvaluationAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin):
     list_display = ("horse", "arrival_date", "created_at", "updated_at")
     search_fields = (
         "horse__program_id",
@@ -562,7 +569,7 @@ class HorseEvaluationAdmin(TrainerVisibleAdminMixin, admin.ModelAdmin):
 
 
 @admin.register(Inquiry)
-class InquiryAdmin(SuperuserOnlyAdminMixin, admin.ModelAdmin):
+class InquiryAdmin(AdminBrandingMixin, SuperuserOnlyAdminMixin, admin.ModelAdmin):
     list_display = ("name", "horse", "email", "phone", "created_at", "is_contacted")
     list_filter = ("is_contacted", "created_at")
     search_fields = (
@@ -587,11 +594,11 @@ except admin.sites.NotRegistered:
     pass
 
 
-class RestrictedUserAdmin(SuperuserOnlyAdminMixin, UserAdmin):
+class RestrictedUserAdmin(AdminBrandingMixin, SuperuserOnlyAdminMixin, UserAdmin):
     pass
 
 
-class RestrictedGroupAdmin(SuperuserOnlyAdminMixin, GroupAdmin):
+class RestrictedGroupAdmin(AdminBrandingMixin, SuperuserOnlyAdminMixin, GroupAdmin):
     pass
 
 

@@ -1,0 +1,18 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | Remus Rodeo Admin{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'admin/css/remus_admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+<div class="remus-branding">
+    <div class="remus-branding__eyebrow">Remus Rodeo</div>
+    <h1 id="site-name"><a href="{% url 'admin:index' %}">Horse Management Dashboard</a></h1>
+</div>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
