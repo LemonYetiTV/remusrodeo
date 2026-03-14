@@ -21,12 +21,25 @@ body {
 
 body,
 .login {
-    background: linear-gradient(180deg, #f6f1e7 0%, #f8f6f1 100%);
+    background: #f8f9fb;
     color: var(--remus-text);
 }
 
 #container {
     min-width: 0;
+}
+
+/* Kill Django sidebar duplication */
+#nav-sidebar {
+    display: none !important;
+}
+
+.main.shifted > #content,
+.main > #content {
+    max-width: var(--remus-max-width);
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100%;
 }
 
 #header {
@@ -66,7 +79,7 @@ body,
 }
 
 div.breadcrumbs {
-    background: rgba(212, 175, 55, 0.08);
+    background: #eef3f7;
     color: var(--remus-muted);
     border-bottom: 1px solid rgba(22, 48, 71, 0.08);
 }
@@ -100,20 +113,32 @@ div.breadcrumbs {
     gap: 28px;
 }
 
-.remus-dashboard-top {
+.remus-dashboard-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 2fr) 340px;
+    gap: 28px;
+    align-items: start;
+}
+
+.remus-dashboard-main {
+    display: flex;
+    flex-direction: column;
     gap: 24px;
-    align-items: stretch;
+}
+
+.remus-dashboard-sidebar {
+    position: sticky;
+    top: 24px;
 }
 
 .remus-dashboard-intro {
-    background: linear-gradient(135deg, rgba(22, 48, 71, 0.98) 0%, rgba(36, 74, 99, 0.96) 100%);
+    background: linear-gradient(135deg, var(--remus-navy) 0%, var(--remus-slate) 100%);
     color: #fff;
     border-radius: var(--remus-radius);
     padding: 32px;
     box-shadow: var(--remus-shadow);
     border: 1px solid rgba(255, 255, 255, 0.08);
+    min-height: 220px;
 }
 
     .remus-dashboard-intro h1 {
@@ -142,15 +167,15 @@ div.breadcrumbs {
 
 .remus-quick-actions {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
 }
 
 .remus-quick-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 108px;
+    min-height: 120px;
     padding: 18px 18px 16px;
     border-radius: 16px;
     background: var(--remus-card);
@@ -168,7 +193,7 @@ div.breadcrumbs {
     }
 
 .remus-quick-card__label {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     line-height: 1.35;
 }
@@ -178,24 +203,6 @@ div.breadcrumbs {
     font-size: 13px;
     font-weight: 700;
     color: var(--remus-slate);
-}
-
-.remus-dashboard-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 2fr) 340px;
-    gap: 28px;
-    align-items: start;
-}
-
-.remus-dashboard-main {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-.remus-dashboard-sidebar {
-    position: sticky;
-    top: 24px;
 }
 
 .remus-admin-card {
@@ -222,58 +229,6 @@ div.breadcrumbs {
 .remus-admin-card__body {
     padding: 0;
 }
-
-.remus-admin-table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: auto;
-}
-
-    .remus-admin-table th,
-    .remus-admin-table td {
-        padding: 16px 18px;
-        border-bottom: 1px solid #edf2f7;
-        vertical-align: middle;
-    }
-
-    .remus-admin-table tr:last-child th,
-    .remus-admin-table tr:last-child td {
-        border-bottom: none;
-    }
-
-    .remus-admin-table th {
-        width: 70%;
-        text-align: left;
-        white-space: normal;
-        font-weight: 700;
-    }
-
-        .remus-admin-table th a {
-            color: var(--remus-slate);
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-            .remus-admin-table th a:hover {
-                color: var(--remus-navy);
-            }
-
-.remus-admin-table__actions {
-    text-align: right;
-    white-space: nowrap;
-}
-
-    .remus-admin-table__actions a {
-        display: inline-block;
-        margin-left: 14px;
-        color: var(--remus-slate);
-        font-weight: 700;
-        text-decoration: none;
-    }
-
-        .remus-admin-table__actions a:hover {
-            color: var(--remus-navy);
-        }
 
 .remus-action-list {
     list-style: none;
@@ -471,16 +426,6 @@ select,
     color: var(--remus-danger);
 }
 
-#nav-sidebar {
-    background: #f9fbfc;
-    border-right: 1px solid var(--remus-border);
-}
-
-    #nav-sidebar .current-app .section,
-    #nav-sidebar .current-model {
-        background: #eef4f8;
-    }
-
 .login #container {
     background: transparent;
 }
@@ -496,8 +441,11 @@ select,
     border-radius: 12px;
 }
 
-@media (max-width: 1100px) {
-    .remus-dashboard-top,
+@media (max-width: 1200px) {
+    .remus-quick-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .remus-dashboard-grid {
         grid-template-columns: 1fr;
     }
@@ -514,6 +462,7 @@ select,
 
     .remus-dashboard-intro {
         padding: 24px;
+        min-height: auto;
     }
 
         .remus-dashboard-intro h1 {
@@ -522,14 +471,5 @@ select,
 
     .remus-quick-actions {
         grid-template-columns: 1fr;
-    }
-
-    .remus-admin-table th,
-    .remus-admin-table td {
-        padding: 14px;
-    }
-
-    .remus-admin-table__actions a {
-        margin-left: 10px;
     }
 }
