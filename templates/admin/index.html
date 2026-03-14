@@ -17,6 +17,21 @@
                     <p class="remus-subtitle">
                         Manage horses, photos, training updates, flyers, and daily barn operations.
                     </p>
+
+                    <div class="remus-hero-actions">
+                        <a href="{% url 'admin:horses_horse_add' %}" class="remus-hero-btn remus-hero-btn--primary">
+                            Add Horse
+                        </a>
+                        <a href="{% url 'admin:horses_horse_changelist' %}" class="remus-hero-btn remus-hero-btn--secondary">
+                            Horse List
+                        </a>
+                        <a href="{% url 'admin:horses_horsephoto_add' %}" class="remus-hero-btn remus-hero-btn--secondary">
+                            Add Photo
+                        </a>
+                        <a href="{% url 'admin:horses_trainingupdate_add' %}" class="remus-hero-btn remus-hero-btn--secondary">
+                            Training Update
+                        </a>
+                    </div>
                 </div>
 
                 <div class="remus-intro-logo">
@@ -25,22 +40,14 @@
 
             </section>
 
-
             <section class="remus-quick-actions">
 
                 {% for app in app_list %}
                 {% for model in app.models %}
                 {% if model.admin_url %}
                 <a href="{{ model.admin_url }}" class="remus-quick-card">
-
-                    <span class="remus-quick-card__label">
-                        {{ model.name }}
-                    </span>
-
-                    <span class="remus-quick-card__action">
-                        Open →
-                    </span>
-
+                    <span class="remus-quick-card__label">{{ model.name }}</span>
+                    <span class="remus-quick-card__action">Open →</span>
                 </a>
                 {% endif %}
                 {% endfor %}
@@ -49,7 +56,6 @@
             </section>
 
         </main>
-
 
         <aside class="remus-dashboard-sidebar">
 
@@ -66,9 +72,7 @@
                     <ul class="remus-action-list">
 
                         {% for entry in admin_log %}
-
                         <li class="remus-action-item">
-
                             {% if entry.is_deletion or not entry.get_admin_url %}
                             {{ entry.object_repr }}
                             {% else %}
@@ -76,13 +80,10 @@
                                 {{ entry.object_repr }}
                             </a>
                             {% endif %}
-
                             <span class="remus-action-meta">
                                 {{ entry.content_type.name }}
                             </span>
-
                         </li>
-
                         {% endfor %}
 
                     </ul>
