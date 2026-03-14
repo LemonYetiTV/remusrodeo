@@ -568,3 +568,7 @@ a {
         color: var(--remus-white) !important;
         transform: translateY(-1px);
     }
+
+.dashboard .breadcrumbs {
+    display: none;
+}
