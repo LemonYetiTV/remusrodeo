@@ -11,7 +11,7 @@
     --remus-danger: #991b1b;
     --remus-shadow: 0 10px 30px rgba(22, 48, 71, 0.10);
     --remus-radius: 14px;
-    --remus-max-width: 1320px;
+    --remus-max-width: 1280px;
 }
 
 html,
@@ -21,7 +21,7 @@ body {
 
 body,
 .login {
-    background: linear-gradient(180deg, #f8fafc 0%, #eef3f7 100%);
+    background: linear-gradient(180deg, #f6f1e7 0%, #f8fafc 100%);
     color: var(--remus-text);
 }
 
@@ -33,24 +33,7 @@ body,
     background: linear-gradient(90deg, var(--remus-navy) 0%, var(--remus-slate) 100%);
     color: #fff;
     box-shadow: var(--remus-shadow);
-    padding-left: 0;
-    padding-right: 0;
 }
-
-    #header > div,
-    #header #branding,
-    #header #user-tools {
-        box-sizing: border-box;
-    }
-
-    #header #branding,
-    #header #user-tools {
-        max-width: var(--remus-max-width);
-        margin-left: auto;
-        margin-right: auto;
-        padding-left: 24px;
-        padding-right: 24px;
-    }
 
     #header a:link,
     #header a:visited {
@@ -83,11 +66,9 @@ body,
 }
 
 div.breadcrumbs {
-    background: #e8eef4;
+    background: rgba(212, 175, 55, 0.10);
     color: var(--remus-muted);
-    border-bottom: 1px solid var(--remus-border);
-    padding-left: 0;
-    padding-right: 0;
+    border-bottom: 1px solid rgba(36, 74, 99, 0.12);
 }
 
     div.breadcrumbs a {
@@ -95,49 +76,17 @@ div.breadcrumbs {
         font-weight: 600;
     }
 
-div.breadcrumbs,
 #content,
-#footer {
+div.breadcrumbs {
     box-sizing: border-box;
-}
-
-div.breadcrumbs,
-#content,
-#footer,
-#content-start {
+    width: 100%;
     max-width: var(--remus-max-width);
     margin-left: auto;
     margin-right: auto;
-    width: 100%;
 }
 
 #content {
-    padding: 28px 24px 36px;
-}
-
-.dashboard #content {
-    max-width: var(--remus-max-width);
-}
-
-.dashboard #content-main,
-.dashboard #content-related {
-    margin-top: 0;
-}
-
-.dashboard #content {
-    display: grid;
-    grid-template-columns: minmax(0, 2fr) 320px;
-    gap: 36px;
-    align-items: start;
-}
-
-.dashboard #content-main {
-    min-width: 0;
-}
-
-.dashboard #content-related {
-    min-width: 0;
-    margin-left: 0;
+    padding: 32px 24px 40px;
 }
 
 .module,
@@ -148,7 +97,7 @@ div.breadcrumbs,
 .results,
 #content-related {
     background: var(--remus-card);
-    border: 1px solid var(--remus-border);
+    border: 1px solid rgba(36, 74, 99, 0.12);
     border-radius: var(--remus-radius);
     box-shadow: var(--remus-shadow);
     overflow: hidden;
@@ -157,7 +106,7 @@ div.breadcrumbs,
     .module h2,
     .module caption,
     .inline-group h2 {
-        background: linear-gradient(90deg, var(--remus-slate) 0%, var(--remus-navy) 100%);
+        background: linear-gradient(90deg, var(--remus-navy) 0%, var(--remus-slate) 100%);
         color: #fff;
         padding: 14px 16px;
         font-size: 14px;
@@ -165,42 +114,99 @@ div.breadcrumbs,
         text-transform: uppercase;
     }
 
-.dashboard #content-main .module {
-    margin-bottom: 28px;
+.dashboard #content > h1 {
+    display: none;
 }
 
-.dashboard .module table {
+.remus-dashboard-shell {
     width: 100%;
-    border-collapse: collapse;
 }
 
-    .dashboard .module table th,
-    .dashboard .module table td {
-        padding: 12px 14px;
+.dashboard .remus-dashboard-main {
+    width: 100%;
+}
+
+.dashboard #content-main {
+    width: 100%;
+    float: none;
+}
+
+.dashboard #content-related {
+    float: none;
+    width: 100%;
+    margin: 0;
+}
+
+.dashboard .remus-dashboard-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.9fr) minmax(280px, 340px);
+    gap: 32px;
+    align-items: start;
+}
+
+    .dashboard .remus-dashboard-main::after {
+        content: "";
+        display: block;
+        clear: both;
     }
 
-    .dashboard .module table tr {
-        border-bottom: 1px solid #edf2f7;
+.dashboard #content-main {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+    .dashboard #content-main .module {
+        margin: 0;
     }
 
-        .dashboard .module table tr:last-child {
-            border-bottom: none;
+        .dashboard #content-main .module table {
+            width: 100%;
+            border-collapse: collapse;
         }
+
+.dashboard .module table th,
+.dashboard .module table td {
+    padding: 14px 16px;
+    vertical-align: middle;
+}
+
+.dashboard .module table tr {
+    border-bottom: 1px solid #edf2f7;
+}
+
+    .dashboard .module table tr:last-child {
+        border-bottom: none;
+    }
+
+.dashboard .module table th {
+    width: 60%;
+}
 
     .dashboard .module table th a,
     .dashboard .module table td a {
         font-weight: 600;
     }
 
-#content-related .module {
+.dashboard #content-related .module {
     margin: 0;
-    box-shadow: none;
-    border: none;
-    border-radius: 0;
 }
 
-#content-related h2 {
-    margin: 0;
+.dashboard #content-related h2 {
+    background: transparent;
+    color: var(--remus-navy);
+    padding: 18px 18px 10px;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+}
+
+.dashboard #content-related .actionlist {
+    padding: 0 18px 18px;
+}
+
+.dashboard #content-related .module h3 {
+    padding: 0 18px;
+    color: var(--remus-text);
 }
 
 #changelist {
@@ -275,19 +281,19 @@ div.breadcrumbs,
 .calendar caption,
 .calendarbox h2,
 .clockbox h2 {
-    background: linear-gradient(90deg, var(--remus-slate) 0%, var(--remus-navy) 100%);
+    background: linear-gradient(90deg, var(--remus-navy) 0%, var(--remus-slate) 100%);
     color: #fff;
 }
 
 table thead th {
-    background: #f4f7fa;
+    background: rgba(22, 48, 71, 0.04);
     color: var(--remus-text);
     border-bottom: 1px solid var(--remus-border);
     font-weight: 700;
 }
 
 #result_list tbody tr:hover {
-    background: #f8fbfd;
+    background: rgba(36, 74, 99, 0.03);
 }
 
 .form-row {
@@ -354,9 +360,8 @@ select,
 }
 
 .login #content {
-    display: block;
-    padding-top: 48px;
     max-width: 520px;
+    padding-top: 48px;
 }
 
 .login .form-row,
@@ -366,31 +371,13 @@ select,
 }
 
 @media (max-width: 1100px) {
-    .dashboard #content {
+    .dashboard .remus-dashboard-main {
         grid-template-columns: 1fr;
-        gap: 24px;
-    }
-
-    .dashboard #content-related {
-        order: 2;
-    }
-
-    .dashboard #content-main {
-        order: 1;
     }
 }
 
 @media (max-width: 768px) {
-    #header #branding,
-    #header #user-tools,
-    #content,
-    div.breadcrumbs {
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-
     #content {
-        padding-top: 20px;
-        padding-bottom: 28px;
+        padding: 20px 16px 28px;
     }
 }
