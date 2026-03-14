@@ -195,19 +195,20 @@ class HorseAdmin(TrainerVisibleAdminMixin, admin.ModelAdmin):
     change_form_template = "admin/horses/horse/change_form.html"
 
     list_display = (
+        "photo_thumb",
         "program_id",
         "barn_name",
         "age",
         "sex",
         "discipline_focus",
         "training_stage",
-        "price",
-        "is_for_sale",
-        "is_published",
-        "is_sold",
-        "is_new",
+        "formatted_price",
+        "sale_status_badge",
+        "publish_status_badge",
+        "quick_actions",
     )
 
+    list_display_links = ("photo_thumb", "program_id", "barn_name")
     list_filter = (
         "sex",
         "discipline_focus",
@@ -215,13 +216,15 @@ class HorseAdmin(TrainerVisibleAdminMixin, admin.ModelAdmin):
         "is_for_sale",
         "is_published",
         "is_sold",
+        "is_featured",
+        "is_new",
     )
-
     search_fields = (
         "program_id",
         "barn_name",
         "registered_name",
     )
+    list_per_page = 25
 
     inlines = [
         HorseEvaluationInline,
@@ -305,6 +308,90 @@ class HorseAdmin(TrainerVisibleAdminMixin, admin.ModelAdmin):
         if obj:
             return ("program_id", "slug", *base_fields)
         return base_fields
+
+    def photo_thumb(self, obj):
+        image = getattr(obj, "featured_photo", None)
+        if image:
+            return format_html(
+                '<img src="{}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid #d1d5db;" />',
+                image.url,
+            )
+        return format_html(
+            '<div style="width:72px;height:72px;display:flex;align-items:center;justify-content:center;'
+            'border:1px dashed #9ca3af;border-radius:8px;color:#6b7280;font-size:11px;">No Photo</div>'
+        )
+
+    photo_thumb.short_description = "Photo"
+
+    def formatted_price(self, obj):
+        if obj.price:
+            return f"${int(obj.price):,}"
+        return "Price on request"
+
+    formatted_price.short_description = "Price"
+    formatted_price.admin_order_field = "price"
+
+    def sale_status_badge(self, obj):
+        if obj.is_sold:
+            label = "Sold"
+            bg = "#991b1b"
+            fg = "#ffffff"
+        elif obj.is_for_sale:
+            label = "For Sale"
+            bg = "#166534"
+            fg = "#ffffff"
+        else:
+            label = "Not Listed"
+            bg = "#6b7280"
+            fg = "#ffffff"
+
+        return format_html(
+            '<span style="display:inline-block;padding:4px 10px;border-radius:999px;'
+            'background:{};color:{};font-weight:600;font-size:12px;">{}</span>',
+            bg,
+            fg,
+            label,
+        )
+
+    sale_status_badge.short_description = "Sale Status"
+
+    def publish_status_badge(self, obj):
+        if obj.is_published:
+            label = "Published"
+            bg = "#1d4ed8"
+            fg = "#ffffff"
+        else:
+            label = "Draft"
+            bg = "#92400e"
+            fg = "#ffffff"
+
+        return format_html(
+            '<span style="display:inline-block;padding:4px 10px;border-radius:999px;'
+            'background:{};color:{};font-weight:600;font-size:12px;">{}</span>',
+            bg,
+            fg,
+            label,
+        )
+
+    publish_status_badge.short_description = "Publish Status"
+
+    def quick_actions(self, obj):
+        edit_url = reverse("admin:horses_horse_change", args=[obj.pk])
+        flyer_url = reverse("admin:horses_horse_generate_flyer", args=[obj.pk])
+        facebook_url = reverse("admin:horses_horse_facebook_post", args=[obj.pk])
+
+        return format_html(
+            '<div style="display:flex;gap:6px;flex-wrap:wrap;">'
+            '<a class="button" href="{}">Edit</a>'
+            '<a class="button" href="{}">Flyer</a>'
+            '<a class="button" href="{}">Facebook</a>'
+            "</div>",
+            edit_url,
+            flyer_url,
+            facebook_url,
+        )
+
+    quick_actions.short_description = "Actions"
 
     def flyer_preview(self, obj):
         if obj and obj.flyer_image:
@@ -421,18 +508,46 @@ Video + Details:
 
 @admin.register(HorsePhoto)
 class HorsePhotoAdmin(TrainerVisibleAdminMixin, admin.ModelAdmin):
-    list_display = ("horse", "caption", "sort_order", "uploaded_at")
+    list_display = ("photo_preview", "horse", "caption", "sort_order", "uploaded_at")
+    list_display_links = ("photo_preview", "horse")
     list_filter = ("horse",)
     search_fields = ("horse__program_id", "horse__barn_name", "caption")
     ordering = ("horse", "sort_order")
 
+    def photo_preview(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;border:1px solid #d1d5db;" />',
+                obj.image.url,
+            )
+        return format_html(
+            '<div style="width:60px;height:60px;display:flex;align-items:center;justify-content:center;'
+            'border:1px dashed #9ca3af;border-radius:8px;color:#6b7280;font-size:10px;">No Image</div>'
+        )
+
+    photo_preview.short_description = "Image"
+
 
 @admin.register(TrainingUpdate)
 class TrainingUpdateAdmin(TrainerVisibleAdminMixin, admin.ModelAdmin):
-    list_display = ("horse", "title", "update_date", "is_published")
+    list_display = ("horse", "title", "update_date", "publish_badge")
     list_filter = ("horse", "is_published")
     search_fields = ("horse__program_id", "horse__barn_name", "title")
     ordering = ("-update_date",)
+
+    def publish_badge(self, obj):
+        if obj.is_published:
+            return format_html(
+                '<span style="display:inline-block;padding:4px 10px;border-radius:999px;'
+                'background:#1d4ed8;color:#ffffff;font-weight:600;font-size:12px;">Published</span>'
+            )
+        return format_html(
+            '<span style="display:inline-block;padding:4px 10px;border-radius:999px;'
+            'background:#92400e;color:#ffffff;font-weight:600;font-size:12px;">Draft</span>'
+        )
+
+    publish_badge.short_description = "Status"
+    publish_badge.admin_order_field = "is_published"
 
 
 @admin.register(HorseEvaluation)
@@ -472,8 +587,17 @@ try:
 except admin.sites.NotRegistered:
     pass
 
-admin.site.register(User, UserAdmin)
-admin.site.register(Group, GroupAdmin)
+
+class RestrictedUserAdmin(SuperuserOnlyAdminMixin, UserAdmin):
+    pass
+
+
+class RestrictedGroupAdmin(SuperuserOnlyAdminMixin, GroupAdmin):
+    pass
+
+
+admin.site.register(User, RestrictedUserAdmin)
+admin.site.register(Group, RestrictedGroupAdmin)
 
 
 @receiver(post_migrate)
@@ -505,3 +629,8 @@ def ensure_trainer_group(sender, **kwargs):
         permission_ids.extend(perms.values_list("id", flat=True))
 
     group.permissions.set(permission_ids)
+
+
+admin.site.site_header = "Remus Rodeo Admin"
+admin.site.site_title = "Remus Rodeo Admin Portal"
+admin.site.index_title = "Horse Management Dashboard"
