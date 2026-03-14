@@ -217,7 +217,6 @@ class HorseAdmin(TrainerVisibleAdminMixin, admin.ModelAdmin):
         "is_published",
         "is_sold",
         "is_featured",
-        "is_new",
     )
     search_fields = (
         "program_id",
