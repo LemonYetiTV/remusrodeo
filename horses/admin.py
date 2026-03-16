@@ -293,11 +293,7 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
         (
             "Media",
             {
-                "fields": (
-                    "featured_photo",
-                    "flyer_image",
-                    "flyer_preview",
-                )
+                "fields": ()
             },
         ),
         (
@@ -313,7 +309,7 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
     )
 
     def get_readonly_fields(self, request, obj=None):
-        base_fields = ("created_at", "updated_at", "is_new", "flyer_preview")
+        base_fields = ("created_at", "updated_at", "is_new",)
         if obj:
             return ("program_id", "slug", *base_fields)
         return base_fields
