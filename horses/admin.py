@@ -342,7 +342,7 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
             image_url,
         )
 
-    photo_thumb.short_description = "Photo"
+        photo_thumb.short_description = "Photo"
 
     def formatted_price(self, obj):
         if obj.price is None:
@@ -437,7 +437,7 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
             "Download current flyer",
         )
 
-    flyer_preview.short_description = "Flyer Preview"
+        flyer_preview.short_description = "Flyer Preview"
 
     def get_urls(self):
         urls = super().get_urls()
@@ -551,6 +551,7 @@ class HorsePhotoAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelA
 
     def photo_preview(self, obj):
         image = getattr(obj, "image", None)
+
         if not image:
             return format_html(
                 '<div style="width:60px;height:60px;display:flex;align-items:center;justify-content:center;'
@@ -572,7 +573,7 @@ class HorsePhotoAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelA
             image_url,
         )
 
-    photo_preview.short_description = "Image"
+        photo_preview.short_description = "Image"
 
 
 @admin.register(TrainingUpdate)
