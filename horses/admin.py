@@ -320,27 +320,38 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
 
     def photo_thumb(self, obj):
         image = getattr(obj, "featured_photo", None)
-        if image:
+
+        if not image:
             return format_html(
-                '<img src="{}" style="width:72px;height:72px;object-fit:cover;border-radius:10px;border:1px solid #d1d5db;" />',
-                image.url,
-            )
-        return format_html(
             '<div style="width:72px;height:72px;display:flex;align-items:center;justify-content:center;'
             'border:1px dashed #9ca3af;border-radius:10px;color:#6b7280;font-size:11px;">No Photo</div>'
         )
 
+        try:
+            image_url = image.url
+        except Exception:
+            return format_html(
+            '<div style="width:72px;height:72px;display:flex;align-items:center;justify-content:center;'
+            'border:1px dashed #9ca3af;border-radius:10px;color:#6b7280;font-size:11px;">Bad Image</div>'
+        )
+
+        return format_html(
+        '<img src="{}" style="width:72px;height:72px;object-fit:cover;border-radius:10px;border:1px solid #d1d5db;" />',
+        image_url,
+    )
+
     photo_thumb.short_description = "Photo"
 
-    def formatted_price(self, obj):
-        if obj.price:
-            return f"${int(obj.price):,}"
-        return "Price on request"
+def formatted_price(self, obj):
+     if obj.price is None:
+         return "Price on request"
 
-    formatted_price.short_description = "Price"
-    formatted_price.admin_order_field = "price"
+     try:
+         return f"${int(obj.price):,}"
+     except (TypeError, ValueError):
+         return str(obj.price)
 
-    def sale_status_badge(self, obj):
+def sale_status_badge(self, obj):
         if obj.is_sold:
             label = "Sold"
             bg = "#991b1b"
@@ -361,10 +372,9 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
             fg,
             label,
         )
+sale_status_badge.short_description = "Sale Status"
 
-    sale_status_badge.short_description = "Sale Status"
-
-    def publish_status_badge(self, obj):
+def publish_status_badge(self, obj):
         if obj.is_published:
             label = "Published"
             bg = "#1d4ed8"
@@ -382,9 +392,9 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
             label,
         )
 
-    publish_status_badge.short_description = "Publish Status"
+publish_status_badge.short_description = "Publish Status"
 
-    def quick_actions(self, obj):
+def quick_actions(self, obj):
         edit_url = reverse("admin:horses_horse_change", args=[obj.pk])
         flyer_url = reverse("admin:horses_horse_generate_flyer", args=[obj.pk])
         facebook_url = reverse("admin:horses_horse_facebook_post", args=[obj.pk])
@@ -400,9 +410,9 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
             facebook_url,
         )
 
-    quick_actions.short_description = "Actions"
+quick_actions.short_description = "Actions"
 
-    def flyer_preview(self, obj):
+def flyer_preview(self, obj):
         if obj and obj.flyer_image:
             return format_html(
                 '<a href="{}" target="_blank">Download current flyer</a>',
@@ -410,9 +420,9 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
             )
         return "No flyer generated yet."
 
-    flyer_preview.short_description = "Flyer Preview"
+flyer_preview.short_description = "Flyer Preview"
 
-    def get_urls(self):
+def get_urls(self):
         urls = super().get_urls()
         custom_urls = [
             path(
@@ -428,7 +438,7 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
         ]
         return custom_urls + urls
 
-    def render_change_form(self, request, context, *args, **kwargs):
+def render_change_form(self, request, context, *args, **kwargs):
         obj = context.get("original")
         if obj:
             context["generate_flyer_url"] = reverse(
@@ -441,7 +451,7 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
             )
         return super().render_change_form(request, context, *args, **kwargs)
 
-    def generate_flyer_view(self, request, object_id):
+def generate_flyer_view(self, request, object_id):
         horse = self.get_object(request, object_id)
         if not horse:
             self.message_user(request, "Horse not found.", level=messages.ERROR)
@@ -473,7 +483,7 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
             reverse("admin:horses_horse_change", args=[horse.pk])
         )
 
-    def facebook_post_view(self, request, object_id):
+def facebook_post_view(self, request, object_id):
         horse = self.get_object(request, object_id)
         if not horse:
             self.message_user(request, "Horse not found.", level=messages.ERROR)
