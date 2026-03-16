@@ -3,7 +3,7 @@ from django.urls import reverse
 
 from .forms import InquiryForm
 from .models import Horse
-
+from .sms import send_inquiry_sms
 
 def home(request):
     featured = Horse.objects.filter(
@@ -46,6 +46,13 @@ def horse_detail(request, slug):
             inquiry = form.save(commit=False)
             inquiry.horse = horse
             inquiry.save()
+
+            # SEND SMS ALERT
+        try:
+            send_inquiry_sms(inquiry)
+        except Exception as e:
+            print("SMS failed:", e)
+
 
             return redirect(
                 reverse("horses:inquiry_success") + f"?horse={horse.program_id}"
