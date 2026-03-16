@@ -419,12 +419,23 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
     quick_actions.short_description = "Actions"
 
     def flyer_preview(self, obj):
-        if obj and obj.flyer_image:
-            return format_html(
-                '<a href="{}" target="_blank">Download current flyer</a>',
-                obj.flyer_image.url,
-            )
-        return "No flyer generated yet."
+        if not obj:
+            return "No flyer generated yet."
+
+        flyer = getattr(obj, "flyer_image", None)
+        if not flyer:
+            return "No flyer generated yet."
+
+        try:
+            flyer_url = flyer.url
+        except Exception:
+            return "Flyer file unavailable."
+
+        return format_html(
+            '<a href="{}" target="_blank" rel="noopener noreferrer">{}</a>',
+            flyer_url,
+            "Download current flyer",
+        )
 
     flyer_preview.short_description = "Flyer Preview"
 
@@ -539,15 +550,26 @@ class HorsePhotoAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelA
     ordering = ("horse", "sort_order")
 
     def photo_preview(self, obj):
-        if obj.image:
+        image = getattr(obj, "image", None)
+        if not image:
             return format_html(
-                '<img src="{}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;border:1px solid #d1d5db;" />',
-                obj.image.url,
+                '<div style="width:60px;height:60px;display:flex;align-items:center;justify-content:center;'
+                'border:1px dashed #9ca3af;border-radius:8px;color:#6b7280;font-size:10px;">{}</div>',
+                "No Image",
             )
+
+        try:
+            image_url = image.url
+        except Exception:
+            return format_html(
+                '<div style="width:60px;height:60px;display:flex;align-items:center;justify-content:center;'
+                'border:1px dashed #9ca3af;border-radius:8px;color:#6b7280;font-size:10px;">{}</div>',
+                "Bad Image",
+            )
+
         return format_html(
-            '<div style="width:60px;height:60px;display:flex;align-items:center;justify-content:center;'
-            'border:1px dashed #9ca3af;border-radius:8px;color:#6b7280;font-size:10px;">{}</div>',
-            "No Image",
+            '<img src="{}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;border:1px solid #d1d5db;" />',
+            image_url,
         )
 
     photo_preview.short_description = "Image"
