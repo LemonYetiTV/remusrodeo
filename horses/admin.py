@@ -293,7 +293,9 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
         (
             "Media",
             {
-                "fields": ()
+                "fields": (
+                    "featured_photo",
+                )
             },
         ),
         (
