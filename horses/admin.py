@@ -205,7 +205,6 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
     change_form_template = "admin/horses/horse/change_form.html"
 
     list_display = (
-        "photo_thumb",
         "program_id",
         "barn_name",
         "age",
@@ -215,8 +214,9 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
         "formatted_price",
         "sale_status_badge",
         "publish_status_badge",
+        "photo_thumb",
         "quick_actions",
-    )
+)
 
     list_display_links = ("photo_thumb", "program_id", "barn_name")
     list_filter = (
@@ -324,7 +324,8 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
         if not image:
             return format_html(
                 '<div style="width:72px;height:72px;display:flex;align-items:center;justify-content:center;'
-                'border:1px dashed #9ca3af;border-radius:10px;color:#6b7280;font-size:11px;">No Photo</div>'
+                'border:1px dashed #9ca3af;border-radius:10px;color:#6b7280;font-size:11px;">{}</div>',
+                "No Photo",
             )
 
         try:
@@ -332,7 +333,8 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
         except Exception:
             return format_html(
                 '<div style="width:72px;height:72px;display:flex;align-items:center;justify-content:center;'
-                'border:1px dashed #9ca3af;border-radius:10px;color:#6b7280;font-size:11px;">Bad Image</div>'
+                'border:1px dashed #9ca3af;border-radius:10px;color:#6b7280;font-size:11px;">{}</div>',
+                "Bad Image",
             )
 
         return format_html(
@@ -528,7 +530,6 @@ Video + Details:
             context,
         )
 
-
 @admin.register(HorsePhoto)
 class HorsePhotoAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin):
     list_display = ("photo_preview", "horse", "caption", "sort_order", "uploaded_at")
@@ -545,7 +546,8 @@ class HorsePhotoAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelA
             )
         return format_html(
             '<div style="width:60px;height:60px;display:flex;align-items:center;justify-content:center;'
-            'border:1px dashed #9ca3af;border-radius:8px;color:#6b7280;font-size:10px;">No Image</div>'
+            'border:1px dashed #9ca3af;border-radius:8px;color:#6b7280;font-size:10px;">{}</div>',
+            "No Image",
         )
 
     photo_preview.short_description = "Image"
@@ -562,11 +564,13 @@ class TrainingUpdateAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.Mo
         if obj.is_published:
             return format_html(
                 '<span style="display:inline-block;padding:4px 10px;border-radius:999px;'
-                'background:#1d4ed8;color:#ffffff;font-weight:600;font-size:12px;">Published</span>'
+                'background:#1d4ed8;color:#ffffff;font-weight:600;font-size:12px;">{}</span>',
+                "Published",
             )
         return format_html(
             '<span style="display:inline-block;padding:4px 10px;border-radius:999px;'
-            'background:#92400e;color:#ffffff;font-weight:600;font-size:12px;">Draft</span>'
+            'background:#92400e;color:#ffffff;font-weight:600;font-size:12px;">{}</span>',
+            "Draft",
         )
 
     publish_badge.short_description = "Status"
