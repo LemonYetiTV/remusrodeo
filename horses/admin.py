@@ -342,146 +342,146 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
 
     photo_thumb.short_description = "Photo"
 
-def formatted_price(self, obj):
-     if obj.price is None:
-         return "Price on request"
+    def formatted_price(self, obj):
+         if obj.price is None:
+             return "Price on request"
 
-     try:
-         return f"${int(obj.price):,}"
-     except (TypeError, ValueError):
-         return str(obj.price)
+         try:
+             return f"${int(obj.price):,}"
+         except (TypeError, ValueError):
+             return str(obj.price)
 
-def sale_status_badge(self, obj):
-        if obj.is_sold:
-            label = "Sold"
-            bg = "#991b1b"
-            fg = "#ffffff"
-        elif obj.is_for_sale:
-            label = "For Sale"
-            bg = "#166534"
-            fg = "#ffffff"
-        else:
-            label = "Not Listed"
-            bg = "#6b7280"
-            fg = "#ffffff"
+    def sale_status_badge(self, obj):
+            if obj.is_sold:
+                label = "Sold"
+                bg = "#991b1b"
+                fg = "#ffffff"
+            elif obj.is_for_sale:
+                label = "For Sale"
+                bg = "#166534"
+                fg = "#ffffff"
+            else:
+                label = "Not Listed"
+                bg = "#6b7280"
+                fg = "#ffffff"
 
-        return format_html(
-            '<span style="display:inline-block;padding:4px 10px;border-radius:999px;'
-            'background:{};color:{};font-weight:600;font-size:12px;">{}</span>',
-            bg,
-            fg,
-            label,
-        )
-sale_status_badge.short_description = "Sale Status"
-
-def publish_status_badge(self, obj):
-        if obj.is_published:
-            label = "Published"
-            bg = "#1d4ed8"
-            fg = "#ffffff"
-        else:
-            label = "Draft"
-            bg = "#92400e"
-            fg = "#ffffff"
-
-        return format_html(
-            '<span style="display:inline-block;padding:4px 10px;border-radius:999px;'
-            'background:{};color:{};font-weight:600;font-size:12px;">{}</span>',
-            bg,
-            fg,
-            label,
-        )
-
-publish_status_badge.short_description = "Publish Status"
-
-def quick_actions(self, obj):
-        edit_url = reverse("admin:horses_horse_change", args=[obj.pk])
-        flyer_url = reverse("admin:horses_horse_generate_flyer", args=[obj.pk])
-        facebook_url = reverse("admin:horses_horse_facebook_post", args=[obj.pk])
-
-        return format_html(
-            '<div style="display:flex;gap:6px;flex-wrap:wrap;">'
-            '<a class="button" href="{}">Edit</a>'
-            '<a class="button" href="{}">Flyer</a>'
-            '<a class="button" href="{}">Facebook</a>'
-            "</div>",
-            edit_url,
-            flyer_url,
-            facebook_url,
-        )
-
-quick_actions.short_description = "Actions"
-
-def flyer_preview(self, obj):
-        if obj and obj.flyer_image:
             return format_html(
-                '<a href="{}" target="_blank">Download current flyer</a>',
-                obj.flyer_image.url,
+                '<span style="display:inline-block;padding:4px 10px;border-radius:999px;'
+                'background:{};color:{};font-weight:600;font-size:12px;">{}</span>',
+                bg,
+                fg,
+                label,
             )
-        return "No flyer generated yet."
+    sale_status_badge.short_description = "Sale Status"
 
-flyer_preview.short_description = "Flyer Preview"
+    def publish_status_badge(self, obj):
+            if obj.is_published:
+                label = "Published"
+                bg = "#1d4ed8"
+                fg = "#ffffff"
+            else:
+                label = "Draft"
+                bg = "#92400e"
+                fg = "#ffffff"
 
-def get_urls(self):
-        urls = super().get_urls()
-        custom_urls = [
-            path(
-                "<path:object_id>/generate-flyer/",
-                self.admin_site.admin_view(self.generate_flyer_view),
-                name="horses_horse_generate_flyer",
-            ),
-            path(
-                "<path:object_id>/facebook-post/",
-                self.admin_site.admin_view(self.facebook_post_view),
-                name="horses_horse_facebook_post",
-            ),
-        ]
-        return custom_urls + urls
-
-def render_change_form(self, request, context, *args, **kwargs):
-        obj = context.get("original")
-        if obj:
-            context["generate_flyer_url"] = reverse(
-                "admin:horses_horse_generate_flyer",
-                args=[obj.pk],
-            )
-            context["facebook_post_url"] = reverse(
-                "admin:horses_horse_facebook_post",
-                args=[obj.pk],
-            )
-        return super().render_change_form(request, context, *args, **kwargs)
-
-def generate_flyer_view(self, request, object_id):
-        horse = self.get_object(request, object_id)
-        if not horse:
-            self.message_user(request, "Horse not found.", level=messages.ERROR)
-            return HttpResponseRedirect(reverse("admin:horses_horse_changelist"))
-
-        if not self.has_change_permission(request, horse):
-            self.message_user(
-                request,
-                "You do not have permission to generate a flyer for this horse.",
-                level=messages.ERROR,
-            )
-            return HttpResponseRedirect(reverse("admin:horses_horse_changelist"))
-
-        try:
-            generate_facebook_flyer(horse)
-            self.message_user(
-                request,
-                "Flyer generated successfully.",
-                level=messages.SUCCESS,
-            )
-        except Exception as exc:
-            self.message_user(
-                request,
-                f"Flyer generation failed: {exc}",
-                level=messages.ERROR,
+            return format_html(
+                '<span style="display:inline-block;padding:4px 10px;border-radius:999px;'
+                'background:{};color:{};font-weight:600;font-size:12px;">{}</span>',
+                bg,
+                fg,
+                label,
             )
 
-        return HttpResponseRedirect(
-            reverse("admin:horses_horse_change", args=[horse.pk])
-        )
+    publish_status_badge.short_description = "Publish Status"
+
+    def quick_actions(self, obj):
+            edit_url = reverse("admin:horses_horse_change", args=[obj.pk])
+            flyer_url = reverse("admin:horses_horse_generate_flyer", args=[obj.pk])
+            facebook_url = reverse("admin:horses_horse_facebook_post", args=[obj.pk])
+
+            return format_html(
+                '<div style="display:flex;gap:6px;flex-wrap:wrap;">'
+                '<a class="button" href="{}">Edit</a>'
+                '<a class="button" href="{}">Flyer</a>'
+                '<a class="button" href="{}">Facebook</a>'
+                "</div>",
+                edit_url,
+                flyer_url,
+                facebook_url,
+            )
+
+    quick_actions.short_description = "Actions"
+
+    def flyer_preview(self, obj):
+            if obj and obj.flyer_image:
+                return format_html(
+                    '<a href="{}" target="_blank">Download current flyer</a>',
+                    obj.flyer_image.url,
+                )
+            return "No flyer generated yet."
+
+    flyer_preview.short_description = "Flyer Preview"
+
+    def get_urls(self):
+            urls = super().get_urls()
+            custom_urls = [
+                path(
+                    "<path:object_id>/generate-flyer/",
+                    self.admin_site.admin_view(self.generate_flyer_view),
+                    name="horses_horse_generate_flyer",
+                ),
+                path(
+                    "<path:object_id>/facebook-post/",
+                    self.admin_site.admin_view(self.facebook_post_view),
+                    name="horses_horse_facebook_post",
+                ),
+            ]
+            return custom_urls + urls
+
+    def render_change_form(self, request, context, *args, **kwargs):
+            obj = context.get("original")
+            if obj:
+                context["generate_flyer_url"] = reverse(
+                    "admin:horses_horse_generate_flyer",
+                    args=[obj.pk],
+                )
+                context["facebook_post_url"] = reverse(
+                    "admin:horses_horse_facebook_post",
+                    args=[obj.pk],
+                )
+            return super().render_change_form(request, context, *args, **kwargs)
+
+    def generate_flyer_view(self, request, object_id):
+            horse = self.get_object(request, object_id)
+            if not horse:
+                self.message_user(request, "Horse not found.", level=messages.ERROR)
+                return HttpResponseRedirect(reverse("admin:horses_horse_changelist"))
+
+            if not self.has_change_permission(request, horse):
+                self.message_user(
+                    request,
+                    "You do not have permission to generate a flyer for this horse.",
+                    level=messages.ERROR,
+                )
+                return HttpResponseRedirect(reverse("admin:horses_horse_changelist"))
+
+            try:
+                generate_facebook_flyer(horse)
+                self.message_user(
+                    request,
+                    "Flyer generated successfully.",
+                    level=messages.SUCCESS,
+                )
+            except Exception as exc:
+                self.message_user(
+                    request,
+                    f"Flyer generation failed: {exc}",
+                    level=messages.ERROR,
+                )
+
+            return HttpResponseRedirect(
+                reverse("admin:horses_horse_change", args=[horse.pk])
+            )
 
 def facebook_post_view(self, request, object_id):
         horse = self.get_object(request, object_id)
