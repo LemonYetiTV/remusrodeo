@@ -131,8 +131,8 @@ if USE_R2:
     AWS_S3_ADDRESSING_STYLE = "path"
     AWS_DEFAULT_ACL = None
     AWS_QUERYSTRING_AUTH = False
-    AWS_S3_FILE_OVERWRITE = False
-    AWS_S3_CUSTOM_DOMAIN = "media.remusrodeo.com"
+    AWS_S3_FILE_OVERWRITE = True
+    AWS_S3_CUSTOM_DOMAIN = R2_PUBLIC_BASE_URL.replace("https://", "").replace("http://", "").rstrip("/")
 
     STORAGES = {
         "default": {
@@ -143,7 +143,7 @@ if USE_R2:
         },
     }
 
-    MEDIA_URL = "https://media.remusrodeo.com/"
+    MEDIA_URL = f"{R2_PUBLIC_BASE_URL}/"
 else:
     STORAGES = {
         "default": {
