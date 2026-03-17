@@ -3,7 +3,7 @@ from django.urls import reverse
 
 from .forms import InquiryForm
 from .models import Horse
-
+from .utils import send_sms
 
 def home(request):
     featured = Horse.objects.filter(
@@ -46,6 +46,11 @@ def horse_detail(request, slug):
             inquiry = form.save(commit=False)
             inquiry.horse = horse
             inquiry.save()
+
+            send_sms(
+                f"New inquiry for {horse.barn_name} from {inquiry.name} ({inquiry.phone})",
+                "+1520XXXXXXX",
+            )
                       
             return redirect(
                 reverse("horses:inquiry_success") + f"?horse={horse.program_id}"

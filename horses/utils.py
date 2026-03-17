@@ -2,9 +2,12 @@ from __future__ import annotations
 
 from io import BytesIO
 from pathlib import Path
+import os
 
+from django.conf import settings
 from django.core.files.base import ContentFile
 from PIL import Image, ImageDraw, ImageFont
+from twilio.rest import Client
 
 from .models import Horse
 
@@ -161,3 +164,33 @@ def generate_facebook_flyer(horse: Horse) -> None:
 
     filename = f"{horse.program_id.lower().replace(' ', '_')}_{horse.slug}_facebook.jpg"
     horse.flyer_image.save(filename, ContentFile(output.read()), save=True)
+
+
+# ------------------------------
+# TWILIO SMS HELPER
+# ------------------------------
+
+def send_sms(message: str, to_number: str):
+    """
+    Safe Twilio SMS sender.
+    Will never crash the site if Twilio fails.
+    """
+
+    sid = getattr(settings, "TWILIO_ACCOUNT_SID", None)
+    token = getattr(settings, "TWILIO_AUTH_TOKEN", None)
+    phone = getattr(settings, "TWILIO_PHONE_NUMBER", None)
+
+    if not sid or not token or not phone:
+        return
+
+    try:
+        client = Client(sid, token)
+
+        client.messages.create(
+            body=message,
+            from_=phone,
+            to=to_number,
+        )
+
+    except Exception:
+        pass
