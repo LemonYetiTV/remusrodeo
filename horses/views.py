@@ -47,11 +47,24 @@ def horse_detail(request, slug):
             inquiry.horse = horse
             inquiry.save()
 
-            send_sms(
-                f"New inquiry for {horse.barn_name} from {inquiry.name} ({inquiry.phone})",
-                "+1520XXXXXXX",
+            message = (
+                f"Remus RodeoBred website inquiry\n"
+                f"Horse: {horse.barn_name}\n"
+                f"Name: {inquiry.name}\n"
+                f"Phone: {inquiry.phone}\n"
+                f"Message: {inquiry.message}\n"
+                f"Listing: https://remusrodeo.com/horses/{horse.slug}/"
             )
-                      
+
+            numbers = [
+                os.environ.get("OWNER_ALERT_PHONE"),
+                os.environ.get("TRAINER_ALERT_PHONE"),
+            ]
+
+            for number in numbers:
+                if number:
+                    send_sms(message, number)
+            
             return redirect(
                 reverse("horses:inquiry_success") + f"?horse={horse.program_id}"
             )
