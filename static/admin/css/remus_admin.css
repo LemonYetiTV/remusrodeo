@@ -794,3 +794,38 @@ a {
         text-indent: 0 !important;
         padding-left: 8px !important;
     }
+
+/* === FIX ACTION BAR ALIGNMENT === */
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+    .actions label {
+        margin: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .actions select {
+        height: 36px;
+        line-height: 36px;
+    }
+
+    .actions button,
+    .actions .button {
+        height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .actions span,
+    .actions .action-counter {
+        display: flex;
+        align-items: center;
+        height: 36px;
+        line-height: 36px;
+    }
