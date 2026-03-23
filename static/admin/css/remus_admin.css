@@ -829,3 +829,63 @@ a {
         height: 36px;
         line-height: 36px;
     }
+
+/* === FIX CHANGE LIST WIDTH / OVERFLOW === */
+#changelist {
+    overflow-x: visible;
+}
+
+    #changelist .results {
+        overflow-x: auto;
+    }
+
+        #changelist .results table {
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        #changelist .results th,
+        #changelist .results td {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+/* Narrow columns a bit so everything fits */
+.change-list .results th.column-age,
+.change-list .results td.field-age,
+.change-list .results th.column-sex,
+.change-list .results td.field-sex {
+    width: 55px;
+}
+
+.change-list .results th.column-price,
+.change-list .results td.field-formatted_price {
+    width: 90px;
+}
+
+.change-list .results th.column-photo_thumb,
+.change-list .results td.field-photo_thumb {
+    width: 95px;
+    min-width: 95px;
+    text-align: center;
+}
+
+.change-list .results th.column-quick_actions,
+.change-list .results td.field-quick_actions {
+    width: 110px;
+    min-width: 110px;
+}
+
+    /* Keep buttons compact */
+    .change-list .results td.field-quick_actions > div {
+        display: flex !important;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .change-list .results td.field-quick_actions a.button {
+        width: 100%;
+        padding: 6px 8px !important;
+        font-size: 13px;
+    }
