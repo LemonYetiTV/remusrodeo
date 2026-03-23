@@ -417,12 +417,18 @@ table thead th {
 
 input,
 textarea,
-select,
 .vTextField,
 .vLargeTextField {
     border: 1px solid rgba(199, 144, 84, 0.45) !important;
     border-radius: 10px !important;
     padding: 10px 12px !important;
+    background: #fff !important;
+    color: var(--remus-text) !important;
+}
+
+select {
+    border: 1px solid rgba(199, 144, 84, 0.45) !important;
+    border-radius: 10px !important;
     background: #fff !important;
     color: var(--remus-text) !important;
 }
