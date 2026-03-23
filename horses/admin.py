@@ -623,6 +623,11 @@ class InquiryAdmin(AdminBrandingMixin, SuperuserOnlyAdminMixin, admin.ModelAdmin
         "horse__barn_name",
     )
     ordering = ("-created_at",)
+    actions = ["delete_selected_short"]
+
+    @admin.action(description="Delete selected")
+    def delete_selected_short(self, request, queryset):
+        return admin.actions.delete_selected(self, request, queryset)
 
 
 try:
