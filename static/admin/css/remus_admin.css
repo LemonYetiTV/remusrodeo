@@ -687,10 +687,36 @@ a {
         font-size: 13px;
     }
 }
-/* Changelist table alignment */
+/* Keep the action bar on one line */
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+
+    .actions label {
+        margin-right: 6px;
+        white-space: nowrap;
+    }
+
+    .actions select {
+        width: 180px !important;
+        min-width: 180px !important;
+        max-width: 180px !important;
+        flex: 0 0 180px;
+    }
+
+    .actions button,
+    .actions .button {
+        flex: 0 0 auto;
+        min-width: 70px;
+    }
+
+/* Table sizing */
 .change-list .results table {
-    table-layout: auto;
     width: 100%;
+    table-layout: auto;
 }
 
 .change-list .results th,
@@ -698,7 +724,7 @@ a {
     vertical-align: top;
 }
 
-    /* Photo thumb column */
+    /* Photo column */
     .change-list .results th.column-photo_thumb,
     .change-list .results td.field-photo_thumb {
         width: 110px;
@@ -709,44 +735,33 @@ a {
     /* Actions column */
     .change-list .results th.column-quick_actions,
     .change-list .results td.field-quick_actions {
-        width: 150px;
-        min-width: 150px;
-        vertical-align: top;
+        width: 120px;
+        min-width: 120px;
     }
 
-        /* Make action buttons stack cleanly */
+        /* Stack action buttons neatly without making them huge */
         .change-list .results td.field-quick_actions > div {
             display: flex !important;
             flex-direction: column;
-            align-items: stretch;
             gap: 8px;
-            min-width: 120px;
+            align-items: stretch;
         }
 
-        /* Action buttons sizing */
         .change-list .results td.field-quick_actions a.button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            display: block;
             width: 100%;
-            min-height: 36px;
             box-sizing: border-box;
+            text-align: center;
             white-space: nowrap;
+            padding: 8px 10px;
             margin: 0;
-            padding: 0 12px;
+            min-height: 0;
         }
 
-    /* Keep badge columns from wrapping ugly */
-    .change-list .results th.column-sale_status_badge,
+    /* Prevent ugly wrapping in badge columns */
     .change-list .results td.field-sale_status_badge,
-    .change-list .results th.column-publish_status_badge,
-    .change-list .results td.field-publish_status_badge {
+    .change-list .results td.field-publish_status_badge,
+    .change-list .results th.column-sale_status_badge,
+    .change-list .results th.column-publish_status_badge {
         white-space: nowrap;
-        min-width: 110px;
     }
-
-/* Slightly taller rows for cleaner spacing */
-.change-list .results tbody tr td {
-    padding-top: 12px;
-    padding-bottom: 12px;
-}
