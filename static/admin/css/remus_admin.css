@@ -765,3 +765,26 @@ a {
     .change-list .results th.column-publish_status_badge {
         white-space: nowrap;
     }
+
+/* Force the bulk action dropdown to render normally */
+#changelist-form .actions select,
+.actions select[name="action"] {
+    width: 210px !important;
+    min-width: 210px !important;
+    max-width: 210px !important;
+    padding: 6px 28px 6px 12px !important;
+    text-indent: 0 !important;
+    line-height: 1.2 !important;
+    overflow: visible !important;
+    white-space: nowrap !important;
+    appearance: auto !important;
+    -webkit-appearance: menulist !important;
+    -moz-appearance: menulist !important;
+    background-image: none !important;
+}
+
+    #changelist-form .actions select option,
+    .actions select[name="action"] option {
+        text-indent: 0 !important;
+        padding-left: 8px !important;
+    }
