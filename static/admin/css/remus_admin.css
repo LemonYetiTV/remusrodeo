@@ -687,3 +687,66 @@ a {
         font-size: 13px;
     }
 }
+/* Changelist table alignment */
+.change-list .results table {
+    table-layout: auto;
+    width: 100%;
+}
+
+.change-list .results th,
+.change-list .results td {
+    vertical-align: top;
+}
+
+    /* Photo thumb column */
+    .change-list .results th.column-photo_thumb,
+    .change-list .results td.field-photo_thumb {
+        width: 110px;
+        min-width: 110px;
+        text-align: center;
+    }
+
+    /* Actions column */
+    .change-list .results th.column-quick_actions,
+    .change-list .results td.field-quick_actions {
+        width: 150px;
+        min-width: 150px;
+        vertical-align: top;
+    }
+
+        /* Make action buttons stack cleanly */
+        .change-list .results td.field-quick_actions > div {
+            display: flex !important;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 8px;
+            min-width: 120px;
+        }
+
+        /* Action buttons sizing */
+        .change-list .results td.field-quick_actions a.button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 36px;
+            box-sizing: border-box;
+            white-space: nowrap;
+            margin: 0;
+            padding: 0 12px;
+        }
+
+    /* Keep badge columns from wrapping ugly */
+    .change-list .results th.column-sale_status_badge,
+    .change-list .results td.field-sale_status_badge,
+    .change-list .results th.column-publish_status_badge,
+    .change-list .results td.field-publish_status_badge {
+        white-space: nowrap;
+        min-width: 110px;
+    }
+
+/* Slightly taller rows for cleaner spacing */
+.change-list .results tbody tr td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}

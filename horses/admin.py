@@ -407,7 +407,7 @@ class HorseAdmin(AdminBrandingMixin, TrainerVisibleAdminMixin, admin.ModelAdmin)
             '<div style="display:flex;gap:6px;flex-wrap:wrap;">'
             '<a class="button" href="{}">Edit</a>'
             '<a class="button" href="{}">Flyer</a>'
-            '<a class="button" href="{}">Facebook</a>'
+            '<a class="button" href="{}">Post</a>'
             "</div>",
             edit_url,
             flyer_url,
